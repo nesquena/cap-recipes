@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{caprecipes}
   s.rubygems_version = %q{1.1.1}
-  s.add_dependency("capistrano", ["> 2.2.0"])
   s.summary = %q{My collection of capistrano recipes}
   s.test_files = ["test/test_cap_recipes.rb", "test/test_helper.rb"]
 end
