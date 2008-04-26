@@ -21,6 +21,14 @@ task :check_version do
   end
 end
 
+
+namespace :generate do
+  desc "Generates the gem spec for the github project"
+  task :gemspec do
+    `rake debug_gem > cap_recipes.gemspec`
+  end
+end
+
 desc 'Install the package as a gem, without generating documentation(ri/rdoc)'
 task :install_gem_no_doc => [:clean, :package] do
   sh "#{'sudo ' unless Hoe::WINDOZE }gem install pkg/*.gem --no-rdoc --no-ri"

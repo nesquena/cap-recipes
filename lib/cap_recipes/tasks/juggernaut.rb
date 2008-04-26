@@ -33,7 +33,7 @@ Capistrano::Configuration.instance(true).load do
     end
     
     desc "Displays the juggernaut log from the server"
-    task :tail do
+    task :tail, :role => :app do
       stream "tail -f #{shared_path}/log/juggernaut.log" 
     end
   end

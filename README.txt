@@ -1,32 +1,80 @@
 = cap_recipes
 
-* FIX (url)
-
 == DESCRIPTION:
 
-FIX (describe your package)
+This is a collection of capistrano recipes which will grow to encompass many useful recipes. Currently included:
 
-== FEATURES/PROBLEMS:
-
-* FIX (list of features or problems)
+ * Phusion Passenger (Setup and Deployment)
+ * Apache Server 
+ * Juggernaut Process
+ * Backgroundrb Processes
+ 
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+To include any of these into your deploy.rb configuration file for Capistrano:
+  
+  require 'cap_recipes/tasks/passenger'
+  require 'cap_recipes/tasks/apache'
+  require 'cap_recipes/tasks/backgroundrb'
+  require 'cap_recipes/tasks/juggernaut'
+  
+== USAGE
 
-== REQUIREMENTS:
+Passenger
 
-* FIX (list of requirements)
+  deploy
+    :stop
+    :start
+    :restart
+    :with_migrations
+    :copy_config
+    :tail
+    :install
+  sweep
+    :cache
+    :log
+    
+Apache
+  variables: apache_init_path
+  tasks:
+    apache
+      :stop
+      :start
+      :restart
+      :install
+  
+Backgroundrb
+  variables: backgroundrb_log
+  tasks:
+    backgroundrb
+      :stop
+      :start
+      :restart
+      :copy_config
+      :tail
+
+Juggernaut
+  
+  variables: juggernaut_config, juggernaut_pid, juggernaut_log
+  tasks:
+    juggernaut
+      :start
+      :stop
+      :restart
+      :copy_config
+      :tail
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+ * gem sources -a http://gems.github.com/
+ * sudo gem install xgamerx-cap-recipes
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIX
+Copyright (c) 2008 Nathan Esquenazi
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

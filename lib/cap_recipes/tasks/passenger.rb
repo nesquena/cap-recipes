@@ -65,13 +65,13 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================  
   namespace :sweep do
     desc "Clear file-based fragment and action caching"
-    task :log do
+    task :log, :role => :app do
       puts "Sweeping all the log files"
       run "cd #{current_path} && sudo rake log:clear RAILS_ENV=production" 
     end
     
     desc "Clear file-based fragment and action caching"
-    task :cache do
+    task :cache, :role => :app do
       puts "Sweeping the fragment and action cache stores"
       run "cd #{current_path} && rake tmp:cache:clear RAILS_ENV=production" 
     end

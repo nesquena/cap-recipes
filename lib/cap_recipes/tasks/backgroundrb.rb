@@ -1,7 +1,6 @@
 require 'yaml'
 
 Capistrano::Configuration.instance(true).load do
-  set :backgroundrb_log, "log/backgroundrb-cap.log"
   set :backgroundrb_host, 'localhost'
   set :backgroundrb_env, 'production'
   

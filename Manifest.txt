@@ -16,6 +16,9 @@ script/destroy
 script/generate
 script/txt2html
 setup.rb
+tasks/development.rake
+tasks/environment.rake
+tasks/website.rake
 test/test_cap_recipes.rb
 test/test_helper.rb
 website/index.html
