@@ -1,7 +1,6 @@
-(in /Users/nesquena/Documents/Development/TextMate/cap_recipes)
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.0.4"
+  s.version = "0.0.3"
 
   s.specification_version = 2 if s.respond_to? :specification_version=
 
