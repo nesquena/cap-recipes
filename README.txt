@@ -9,7 +9,6 @@ This is a collection of capistrano recipes which will grow to encompass many use
  * Juggernaut Process
  * Backgroundrb Processes
  
-
 == SYNOPSIS:
 
 To include any of these into your deploy.rb configuration file for Capistrano:
