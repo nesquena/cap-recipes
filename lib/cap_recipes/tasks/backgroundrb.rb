@@ -2,7 +2,7 @@ require 'yaml'
 
 Capistrano::Configuration.instance(true).load do
   set :backgroundrb_host, 'localhost'
-  set :backgroundrb_env, 'production'
+  set :backgroundrb_env , 'production'
   
   namespace :backgroundrb do   
     # ===============================================================
@@ -11,7 +11,7 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Stops the backgroundrb worker processes"
     task :stop, :role => :app do
-      run "cd #{current_path} && ruby script/backgroundrb stop -e #{backgroundrb_env}"
+      run "cd #{current_path} && #{sudo} ruby script/backgroundrb stop -e #{backgroundrb_env}"
     end
     
     desc "Starts the backgroundrb worker processes"
@@ -63,5 +63,5 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================  
   
   after "deploy:update_code", "backgroundrb:copy_config"
-  after "deploy:restart", "backgroundrb:restart"
+  after "deploy:restart"    , "backgroundrb:restart"
 end
