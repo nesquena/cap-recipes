@@ -56,12 +56,20 @@ Capistrano::Configuration.instance(true).load do
     task :tail do
       stream "tail -f #{shared_path}/log/backgroundrb_#{backgroundrb_port}.log" 
     end
+    
+    desc "Repair permissions to allow user to perform all actions"
+    task :repair_permissions, :role => :app do
+      puts "Applying correct permissions to allow for proper command execution"
+      sudo "chmod -R 744 #{current_path}"
+      sudo "chown -R nate:nate #{current_path}"
+    end
   end
   
   # ===============================================================
   # TASK CALLBACKS
   # ===============================================================  
   
-  after "deploy:update_code", "backgroundrb:copy_config"
-  after "deploy:restart"    , "backgroundrb:restart"
+  after "deploy:update_code"   , "backgroundrb:copy_config"
+  after "deploy:restart"       , "backgroundrb:restart"
+  after "backgroundrb:restart" , "backgroundrb:repair_permissions"
 end

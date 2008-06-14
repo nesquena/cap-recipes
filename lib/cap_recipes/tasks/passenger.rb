@@ -87,7 +87,7 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================
   # TASK CALLBACKS
   # ===============================================================
-  after "deploy:update_code", "deploy:repair_permissions" # fix the permissions to work properly
   after "deploy:update_code", "deploy:copy_config" # copy database.yml file to release path
   after "deploy:update_code", "sweep:cache" # clear cache after updating code
+  after "deploy:restart"    , "deploy:repair_permissions" # fix the permissions to work properly
 end
