@@ -16,7 +16,7 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Starts the backgroundrb worker processes"
     task :start, :role => :app do
-      run "cd #{current_path} && nohup ruby script/backgroundrb start -e #{backgroundrb_env} > #{backgroundrb_log}"
+      run "cd #{current_path} && #{sudo} nohup ruby script/backgroundrb start -e #{backgroundrb_env} > #{backgroundrb_log}"
     end
     
     desc "Restarts a running backgroundrb server."
