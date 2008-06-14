@@ -50,6 +50,7 @@ Capistrano::Configuration.instance(true).load do
       puts "Applying correct permissions to allow for proper command execution"
       sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
       sudo "chown -R nate:nate #{current_path}"
+      sudo "chown -R nate:nate #{current_path}/tmp"
     end
 
     desc "Displays the production log from the server locally"

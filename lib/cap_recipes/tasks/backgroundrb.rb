@@ -61,6 +61,7 @@ Capistrano::Configuration.instance(true).load do
     task :repair_permissions, :role => :app do
       puts "Applying correct permissions to allow for proper command execution"
       sudo "chown -R nate:nate #{current_path}"
+      sudo "chown -R nate:nate #{current_path}/tmp"
     end
   end
   
