@@ -49,6 +49,7 @@ Capistrano::Configuration.instance(true).load do
     task :repair_permissions, :role => :app do
       puts "Applying correct permissions to allow for proper command execution"
       sudo "chmod -R 744 #{current_path}"
+      sudo "chown -R nate:nate #{current_path}"
     end
 
     desc "Displays the production log from the server locally"
