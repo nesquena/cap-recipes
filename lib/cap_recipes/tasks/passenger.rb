@@ -81,7 +81,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Clear file-based fragment and action caching"
     task :cache, :role => :app do
       puts "Sweeping the fragment and action cache stores"
-      run "cd #{current_path} && #{sudo} rake tmp:cache:clear RAILS_ENV=production"
+      run "cd #{release_path} && #{sudo} rake tmp:cache:clear RAILS_ENV=production"
     end
   end
 
