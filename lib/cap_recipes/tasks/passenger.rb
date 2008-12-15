@@ -62,10 +62,45 @@ Capistrano::Configuration.instance(true).load do
     # INSTALLATION
     # ===============================================================
 
-    task :install, :role => :app do
-      puts 'Installing passenger gems'
-      sudo 'gem install fastthread passenger'
+    desc "Installs Phusion Passenger"
+    task :install_passenger, :role => :app do
+      puts 'Installing passenger module'
+      deploy.passenger_module
+      deploy.config_passenger
     end
+    
+    desc "Setup Passenger Module"
+    task :passenger_module do
+      sudo "gem install passenger --no-ri --no-rdoc"
+      input = ''
+      run "sudo passenger-install-apache2-module" do |ch, stream, out|
+        next if out.chomp == input.chomp || out.chomp == ''
+        print out
+        ch.send_data(input = $stdin.gets) if out =~ /(Enter|ENTER)/
+      end
+    end
+
+    desc "Configure Passenger"
+    task :config_passenger do
+      version = 'ERROR' # default
+      
+      # passenger (2.X.X, 1.X.X)
+      run("gem list | grep passenger") do |ch, stream, data|
+        version = data.sub(/passenger \(([^,]+).*/,"\\1").strip
+      end
+
+      puts "  passenger version #{version} configured"
+
+      passenger_config =<<-EOF
+        LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
+        PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-#{version}
+        PassengerRuby /usr/bin/ruby1.8
+      EOF
+
+      put passenger_config, "src/passenger"
+      sudo "mv src/passenger /etc/apache2/conf.d/passenger"
+    end
+    
   end
 
   # ===============================================================
