@@ -29,31 +29,49 @@ h2. USAGE
 
 h3. Passenger
 
+h4. Configuration
+
+ * ruby_lib_path - the path to the ruby lib folder [default: '/usr/lib/ruby']
+ * ruby_bin_path - the path to the ruby binary [default: '/usr/bin/ruby1.8']
+ 
+h4. Tasks
+
   deploy
-    :stop
     :start
+    :stop
     :restart
     :with_migrations
     :copy_config
     :tail
-    :install
+    :install_passenger
   sweep
     :cache
     :log
     
 h3. Apache
 
-  variables: apache_init_path
-  tasks:
-    apache
-      :stop
-      :start
-      :restart
-      :install
+h4. Configuration
+
+  * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
+
+h4. Tasks
+
+  apache
+    :stop
+    :start
+    :restart
+    :install
   
 h3. Backgroundrb
 
-  variables: backgroundrb_log
+h4. Configuration
+
+  * backgroundrb_log - the path to the backgroundrb log file
+  * backgroundrb_host - the background host machine ip [default: 'localhost']
+  * backgroundrb_env - the rails environment [default: 'production']
+
+h4. Tasks
+
   tasks:
     backgroundrb
       :stop
@@ -64,7 +82,14 @@ h3. Backgroundrb
 
 h3. Juggernaut
 
-  variables: juggernaut_config, juggernaut_pid, juggernaut_log
+h4. Configuration
+
+  * juggernaut_config - path to juggernaut config file [default: "#{current_path}/config/juggernaut.yml"]
+  * juggernaut_pid - path to juggernaut pid file [default: "#{current_path}/tmp/pids/juggernaut.pid"]
+  * juggernaut_log - path to juggernaut log file [default: "#{current_path}/log/juggernaut.log"]
+
+h4. Tasks
+
   tasks:
     juggernaut
       :start

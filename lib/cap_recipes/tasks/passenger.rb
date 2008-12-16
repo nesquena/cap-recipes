@@ -1,4 +1,6 @@
 Capistrano::Configuration.instance(true).load do
+  set :ruby_lib_path, '/usr/lib/ruby'
+  set :ruby_bin_path, '/usr/bin/ruby1.8'
 
   # ===============================================================
   # DEPLOYMENT SCRIPTS
@@ -92,11 +94,11 @@ Capistrano::Configuration.instance(true).load do
       puts "  passenger version #{version} configured"
 
       passenger_config =<<-EOF
-        LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
-        PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-#{version}
+        LoadModule passenger_module #{ruby_lib_path}/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
+        PassengerRoot #{ruby_lib_path}/gems/1.8/gems/passenger-#{version}
         PassengerRuby /usr/bin/ruby1.8
       EOF
-
+      
       put passenger_config, "src/passenger"
       sudo "mv src/passenger /etc/apache2/conf.d/passenger"
     end

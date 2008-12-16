@@ -1,4 +1,7 @@
 Capistrano::Configuration.instance(true).load do
+  set :juggernaut_config, "#{current_path}/config/juggernaut.yml"
+  set :juggernaut_pid, "#{current_path}/tmp/pids/juggernaut.pid"
+  set :juggernaut_log, "#{current_path}/log/juggernaut.log"
   
   namespace :juggernaut do            
     # ===============================================================
