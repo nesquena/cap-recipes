@@ -1,26 +1,31 @@
-= cap_recipes
+h1. cap_recipes
 
-== DESCRIPTION:
+h2. INSTALLATION
+
+ * gem sources -a http://gems.github.com/
+ * sudo gem install nesquena-cap-recipes
+
+h2. DESCRIPTION
 
 This is a collection of capistrano recipes which will grow to encompass many useful recipes. Currently included:
 
  * Phusion Passenger (Setup and Deployment)
- * Apache Server 
- * Juggernaut Process
- * Backgroundrb Processes
+ * Apache Server
+ * Juggernaut Daemon
+ * Backgroundrb Server
  
-== SYNOPSIS:
+h2. SYNOPSIS
 
 To include any of these into your deploy.rb configuration file for Capistrano:
   
-  require 'cap_recipes/tasks/passenger'
-  require 'cap_recipes/tasks/apache'
-  require 'cap_recipes/tasks/backgroundrb'
-  require 'cap_recipes/tasks/juggernaut'
-  
-== USAGE
+   require 'cap_recipes/tasks/passenger'
+   require 'cap_recipes/tasks/apache'
+   require 'cap_recipes/tasks/backgroundrb'
+   require 'cap_recipes/tasks/juggernaut'
 
-Passenger
+h2. USAGE
+
+h3. Passenger
 
   deploy
     :stop
@@ -34,7 +39,8 @@ Passenger
     :cache
     :log
     
-Apache
+h3. Apache
+
   variables: apache_init_path
   tasks:
     apache
@@ -43,7 +49,8 @@ Apache
       :restart
       :install
   
-Backgroundrb
+h3. Backgroundrb
+
   variables: backgroundrb_log
   tasks:
     backgroundrb
@@ -53,8 +60,8 @@ Backgroundrb
       :copy_config
       :tail
 
-Juggernaut
-  
+h3. Juggernaut
+
   variables: juggernaut_config, juggernaut_pid, juggernaut_log
   tasks:
     juggernaut
@@ -64,12 +71,7 @@ Juggernaut
       :copy_config
       :tail
 
-== INSTALL:
-
- * gem sources -a http://gems.github.com/
- * sudo gem install xgamerx-cap-recipes
-
-== LICENSE:
+h2. LICENSE:
 
 (The MIT License)
 
