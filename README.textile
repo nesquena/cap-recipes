@@ -1,4 +1,4 @@
-h1. cap_recipes
+h1. cap-recipes
 
 h2. INSTALLATION
 
@@ -7,7 +7,9 @@ h2. INSTALLATION
 
 h2. DESCRIPTION
 
-This is a collection of capistrano recipes which will grow to encompass many useful recipes. Currently included:
+This is a collection of capistrano recipes which will grow to encompass many useful recipes. The intended use for these recipes is for a rails project which deploys using the Phusion Passenger module of Apache. In addition, recipes for the management of various daemon processes will be included as needed. Feel free to contribute to this and make it better!
+
+Currently included:
 
  * Phusion Passenger (Setup and Deployment)
  * Apache Server
