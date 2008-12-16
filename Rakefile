@@ -5,7 +5,7 @@ require 'rake/gempackagetask'
 require 'spec/rake/spectask'
  
 GEM = "cap-recipes"
-GEM_VERSION = "0.2.1"
+GEM_VERSION = "0.2.2"
 SUMMARY = "Collection of capistrano recipes for apache, passenger, juggernaut and backgroundrb"
 AUTHOR = "Nathan Esquenazi"
 EMAIL = "nesquena@gmail.com"

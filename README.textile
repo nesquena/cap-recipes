@@ -31,9 +31,14 @@ h3. Passenger
 
 h4. Configuration
 
- * ruby_lib_path - the path to the ruby lib folder [default: '/usr/lib/ruby']
- * ruby_bin_path - the path to the ruby binary [default: '/usr/bin/ruby1.8']
+ * base_ruby_path - the base path to the ruby installation [default: "/usr"]
+
+The following files and folders are expected to exist:
  
+ * "#{base_ruby_path}/lib/ruby"
+ * "#{base_ruby_path}/bin/ruby"
+ * "#{base_ruby_path}/bin/gem"
+
 h4. Tasks
 
   deploy
@@ -43,10 +48,13 @@ h4. Tasks
     :with_migrations
     :copy_config
     :tail
-    :install_passenger
+  install
+    :passenger
+    :gems
   sweep
     :cache
     :log
+    :gems
     
 h3. Apache
 

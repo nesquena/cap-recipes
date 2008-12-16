@@ -1,6 +1,5 @@
 Capistrano::Configuration.instance(true).load do
-  set :ruby_lib_path, '/usr/lib/ruby'
-  set :ruby_bin_path, '/usr/bin/ruby1.8'
+  set :base_ruby_path, '/usr'  
 
   # ===============================================================
   # DEPLOYMENT SCRIPTS
@@ -59,23 +58,32 @@ Capistrano::Configuration.instance(true).load do
     task :tail, :role => :app do
       stream "tail -f #{shared_path}/log/production.log"
     end
-
-    # ===============================================================
-    # INSTALLATION
-    # ===============================================================
-
-    desc "Installs Phusion Passenger"
-    task :install_passenger, :role => :app do
-      puts 'Installing passenger module'
-      deploy.passenger_module
-      deploy.config_passenger
+    
+  end
+  
+  # ===============================================================
+  # INSTALLATION
+  # ===============================================================
+  
+  namespace :install do
+    
+    desc "Updates all installed ruby gems"
+    task :gems, :role => :app do
+      sudo "gem update"
     end
     
+    desc "Installs Phusion Passenger"
+    task :passenger, :role => :app do
+      puts 'Installing passenger module'
+      install.passenger_apache_module
+      install.config_passenger
+    end
+  
     desc "Setup Passenger Module"
-    task :passenger_module do
-      sudo "gem install passenger --no-ri --no-rdoc"
+    task :passenger_apache_module do
+      sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       input = ''
-      run "sudo passenger-install-apache2-module" do |ch, stream, out|
+      run "sudo #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
         next if out.chomp == input.chomp || out.chomp == ''
         print out
         ch.send_data(input = $stdin.gets) if out =~ /(Enter|ENTER)/
@@ -85,22 +93,23 @@ Capistrano::Configuration.instance(true).load do
     desc "Configure Passenger"
     task :config_passenger do
       version = 'ERROR' # default
-      
+    
       # passenger (2.X.X, 1.X.X)
       run("gem list | grep passenger") do |ch, stream, data|
-        version = data.sub(/passenger \(([^,]+).*/,"\\1").strip
+        version = data.sub(/passenger \(([^,]+).*?\)/,"\\1").strip
       end
 
       puts "  passenger version #{version} configured"
 
       passenger_config =<<-EOF
-        LoadModule passenger_module #{ruby_lib_path}/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
-        PassengerRoot #{ruby_lib_path}/gems/1.8/gems/passenger-#{version}
-        PassengerRuby /usr/bin/ruby1.8
+        LoadModule passenger_module #{base_ruby_path}/lib/ruby/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
+        PassengerRoot #{base_ruby_path}/lib/ruby/gems/1.8/gems/passenger-#{version}
+        PassengerRuby #{base_ruby_path}/bin/ruby
       EOF
-      
-      put passenger_config, "src/passenger"
-      sudo "mv src/passenger /etc/apache2/conf.d/passenger"
+    
+      put passenger_config, "/tmp/passenger"
+      sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
+      apache.restart
     end
     
   end
@@ -119,7 +128,7 @@ Capistrano::Configuration.instance(true).load do
     task :cache, :role => :app do
       puts "Sweeping the fragment and action cache stores"
       run "cd #{release_path} && #{sudo} rake tmp:cache:clear RAILS_ENV=production"
-    end
+    end    
   end
 
   # ===============================================================
