@@ -49,7 +49,7 @@ Capistrano::Configuration.instance(true).load do
         puts "***** File shared/config/backgroundrb.yml is missing. Make sure you have run backgroundrb:configure first. *****"
       }
       
-      run "cp #{shared_path}/config/backgroundrb.yml #{release_path}/config/"
+      run "ln -s #{shared_path}/config/backgroundrb.yml #{release_path}/config/backgroundrb.yml"
     end
     
     desc "Displays the backgroundrb log from the server"

@@ -32,7 +32,7 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Copies the shared/config/juggernaut yaml to release/config/"
     task :copy_config, :role => :app do
-      sudo "cp #{shared_path}/config/juggernaut.yml #{release_path}/config/"
+      sudo "ln -s #{shared_path}/config/juggernaut.yml #{release_path}/config/juggernaut.yml"
     end
     
     desc "Displays the juggernaut log from the server"

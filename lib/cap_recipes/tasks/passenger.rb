@@ -43,7 +43,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Copies the shared/config/database yaml to release/config/"
     task :copy_config, :role => :app do
       puts "Copying database configuration to release path"
-      sudo "cp #{shared_path}/config/database.yml #{release_path}/config/"
+      sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
 
     desc "Repair permissions to allow user to perform all actions"

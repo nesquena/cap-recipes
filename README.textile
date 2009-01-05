@@ -24,6 +24,11 @@ To include any of these into your deploy.rb configuration file for Capistrano:
    require 'cap_recipes/tasks/apache'
    require 'cap_recipes/tasks/backgroundrb'
    require 'cap_recipes/tasks/juggernaut'
+   require 'cap_recipes/tasks/memcache'
+   
+Or to include and activate all of them:
+
+   require 'cap_recipes'
 
 h2. USAGE
 
@@ -105,6 +110,21 @@ h4. Tasks
       :restart
       :copy_config
       :tail
+      
+h3. Memcache
+
+h4. Configuration
+
+  * memcache_init_path - path to memcache config file [default: "/etc/init.d/memcache"]
+
+h4. Tasks
+
+  tasks:
+    memcache
+      :start
+      :stop
+      :restart
+      :install
 
 h2. LICENSE:
 
