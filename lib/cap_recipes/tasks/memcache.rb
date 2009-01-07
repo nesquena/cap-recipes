@@ -22,7 +22,8 @@ Capistrano::Configuration.instance(true).load do
     desc "Restarts the memcache server"
     task :restart, :role => :app do
       puts "Restarting the memcache server"
-      sudo "#{memcache_init_path} restart"
+      memcache.stop
+      memcache.start
     end
 
     # ===============================================================
