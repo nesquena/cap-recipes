@@ -9,19 +9,19 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================  
     
     desc "Starts the juggernaut push server"
-    task :start, :role => :app do
+    task :start, :role => :app, :except => { :no_release => true } do
       puts "Starting juggernaut push server"
       sudo "#{sudo} juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
     end
     
     desc "Stops the juggernaut push server"
-    task :stop, :role => :app do
+    task :stop, :role => :app, :except => { :no_release => true } do
       puts "Stopping juggernaut push server"
       sudo "#{sudo} juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}" 
     end
     
     desc "Restarts the juggernaut push server"
-    task :restart, :role => :app do
+    task :restart, :role => :app, :except => { :no_release => true } do
       juggernaut.stop
       juggernaut.start
     end  
@@ -31,12 +31,12 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================  
     
     desc "Copies the shared/config/juggernaut yaml to release/config/"
-    task :copy_config, :role => :app do
+    task :copy_config, :role => :app, :except => { :no_release => true } do
       sudo "ln -s #{shared_path}/config/juggernaut.yml #{release_path}/config/juggernaut.yml"
     end
     
     desc "Displays the juggernaut log from the server"
-    task :tail, :role => :app do
+    task :tail, :role => :app, :except => { :no_release => true } do
       stream "tail -f #{shared_path}/log/juggernaut.log" 
     end
   end
