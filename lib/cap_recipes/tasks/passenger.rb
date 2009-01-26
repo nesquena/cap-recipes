@@ -8,13 +8,13 @@ Capistrano::Configuration.instance(true).load do
   namespace :deploy do
     
     desc "Default deploy action" 
-    task :default do
+    task :default, :roles => :web do
       update
       restart
     end
     
     desc "Default deploy action" 
-    task :standard do
+    task :standard, :roles => :web  do
       update
       restart
     end
