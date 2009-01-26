@@ -10,17 +10,17 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================  
     
     desc "Stops the backgroundrb worker processes"
-    task :stop, :role => :app, :except => { :no_release => true } do
+    task :stop, :roles => :app do
       run "cd #{current_path} && #{sudo} ruby script/backgroundrb stop -e #{backgroundrb_env}"
     end
     
     desc "Starts the backgroundrb worker processes"
-    task :start, :role => :app, :except => { :no_release => true } do
+    task :start, :roles => :app do
       run "cd #{current_path} && #{sudo} nohup ruby script/backgroundrb start -e #{backgroundrb_env}"
     end
     
     desc "Restarts a running backgroundrb server."
-    task :restart, :role => :app, :except => { :no_release => true } do
+    task :restart, :roles => :app do
       backgroundrb.stop
       sleep(5)  # sleep for 5 seconds to make sure the server has mopped up everything
       backgroundrb.start
@@ -31,7 +31,7 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================  
     
     desc "Creates configuration file for the backgroundrb server"
-    task :configure, :role => :app, :except => { :no_release => true } do
+    task :configure, :roles => :app do
       config = { :backgroundrb => {:ip => backgroundrb_host, :port => backgroundrb_port, :environment => backgroundrb_env} }
       backgroundrb_yml = config.to_yaml
       
@@ -44,7 +44,7 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================  
     
     desc "Copies the shared/config/backgroundrb yaml to release/config/"
-    task :copy_config, :role => :app, :except => { :no_release => true } do
+    task :copy_config, :roles => :app do
       on_rollback {
         puts "***** File shared/config/backgroundrb.yml is missing. Make sure you have run backgroundrb:configure first. *****"
       }
@@ -53,12 +53,12 @@ Capistrano::Configuration.instance(true).load do
     end
     
     desc "Displays the backgroundrb log from the server"
-    task :tail, :except => { :no_release => true } do
+    task :tail do
       stream "tail -f #{shared_path}/log/backgroundrb_#{backgroundrb_port}.log" 
     end
     
     desc "Repair permissions to allow user to perform all actions"
-    task :repair_permissions, :role => :app, :except => { :no_release => true } do
+    task :repair_permissions, :roles => :app do
       puts "Applying correct permissions to allow for proper command execution"
       sudo "chown -R #{user}:#{user} #{current_path}"
       sudo "chown -R #{user}:#{user} #{current_path}/tmp"

@@ -12,25 +12,25 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================
 
     desc "Stops the phusion passenger server"
-    task :stop, :role => :app, :except => { :no_release => true } do
+    task :stop, :roles => :web do
       puts "Stopping rails web server"
       apache.stop
     end
 
     desc "Starts the phusion passenger server"
-    task :start, :role => :app, :except => { :no_release => true } do
+    task :start, :roles => :web do
       puts "Starting rails web server"
       apache.start
     end
 
     desc "Restarts the phusion passenger server"
-    task :restart, :role => :app, :except => { :no_release => true } do
+    task :restart, :roles => :web do
       puts "Restarting the application"
       run "touch #{current_path}/tmp/restart.txt"
     end
 
     desc "Update code on server, apply migrations, and restart passenger server"
-    task :with_migrations, :role => :app, :except => { :no_release => true } do
+    task :with_migrations, :roles => :web do
       deploy.update
       deploy.migrate
       deploy.restart
@@ -41,13 +41,13 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================
 
     desc "Copies the shared/config/database yaml to release/config/"
-    task :copy_config, :role => :app, :except => { :no_release => true } do
+    task :copy_config, :roles => :web do
       puts "Copying database configuration to release path"
       sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
 
     desc "Repair permissions to allow user to perform all actions"
-    task :repair_permissions, :role => :app, :except => { :no_release => true } do
+    task :repair_permissions, :roles => :web do
       puts "Applying correct permissions to allow for proper command execution"
       sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
       sudo "chown -R #{user}:#{user} #{current_path}"
@@ -55,7 +55,7 @@ Capistrano::Configuration.instance(true).load do
     end
 
     desc "Displays the production log from the server locally"
-    task :tail, :role => :app, :except => { :no_release => true } do
+    task :tail, :roles => :web do
       stream "tail -f #{shared_path}/log/production.log"
     end
     
@@ -68,19 +68,19 @@ Capistrano::Configuration.instance(true).load do
   namespace :install do
     
     desc "Updates all installed ruby gems"
-    task :gems, :role => :app, :except => { :no_release => true } do
+    task :gems, :roles => :web do
       sudo "gem update"
     end
     
     desc "Installs Phusion Passenger"
-    task :passenger, :role => :app, :except => { :no_release => true } do
+    task :passenger, :roles => :web do
       puts 'Installing passenger module'
       install.passenger_apache_module
       install.config_passenger
     end
   
     desc "Setup Passenger Module"
-    task :passenger_apache_module, :except => { :no_release => true } do
+    task :passenger_apache_module, :roles => :web do
       sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       input = ''
       run "sudo #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
@@ -91,7 +91,7 @@ Capistrano::Configuration.instance(true).load do
     end
 
     desc "Configure Passenger"
-    task :config_passenger, :except => { :no_release => true } do
+    task :config_passenger, :roles => :web do
       version = 'ERROR' # default
     
       # passenger (2.X.X, 1.X.X)
@@ -117,15 +117,15 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================
   # MAINTENANCE TASKS
   # ===============================================================
-  namespace :sweep do
+  namespace :sweep, :roles => :web do
     desc "Clear file-based fragment and action caching"
-    task :log, :role => :app, :except => { :no_release => true }  do
+    task :log, :roles => :app  do
       puts "Sweeping all the log files"
       run "cd #{current_path} && #{sudo} rake log:clear RAILS_ENV=production"
     end
 
     desc "Clear file-based fragment and action caching"
-    task :cache, :role => :app, :except => { :no_release => true } do
+    task :cache, :roles => :web do
       puts "Sweeping the fragment and action cache stores"
       run "cd #{release_path} && #{sudo} rake tmp:cache:clear RAILS_ENV=production"
     end    
