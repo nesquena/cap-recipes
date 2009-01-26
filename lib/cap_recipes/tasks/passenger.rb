@@ -14,7 +14,7 @@ Capistrano::Configuration.instance(true).load do
     end
     
     desc "Default deploy action" 
-    task :web do
+    task :standard do
       update
       restart
     end
