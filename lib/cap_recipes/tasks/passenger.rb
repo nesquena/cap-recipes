@@ -7,10 +7,16 @@ Capistrano::Configuration.instance(true).load do
 
   namespace :deploy do
     
-    desc "Update the theme and delete cached files." 
-    task :default, :roles => :web do
-      deploy.update
-      deploy.restart
+    desc "Default deploy action" 
+    task :default do
+      update
+      restart
+    end
+    
+    desc "Default deploy action" 
+    task :web do
+      update
+      restart
     end
 
     # ===============================================================
