@@ -117,9 +117,9 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================
   # MAINTENANCE TASKS
   # ===============================================================
-  namespace :sweep, :roles => :web do
+  namespace :sweep do
     desc "Clear file-based fragment and action caching"
-    task :log, :roles => :app  do
+    task :log, :roles => :web  do
       puts "Sweeping all the log files"
       run "cd #{current_path} && #{sudo} rake log:clear RAILS_ENV=production"
     end
