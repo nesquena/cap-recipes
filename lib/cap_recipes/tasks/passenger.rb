@@ -1,3 +1,5 @@
+require 'cap_recipes/tasks/with_scope.rb'
+
 Capistrano::Configuration.instance(true).load do
   set :base_ruby_path, '/usr'  
 
@@ -9,14 +11,10 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Default deploy action" 
     task :default, :roles => :web do
-      update
-      restart
-    end
-    
-    desc "Default deploy action" 
-    task :standard, :roles => :web  do
-      update
-      restart
+      with_role(:web) do
+        update
+        restart
+      end
     end
 
     # ===============================================================
