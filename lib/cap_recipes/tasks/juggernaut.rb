@@ -11,13 +11,13 @@ Capistrano::Configuration.instance(true).load do
     desc "Starts the juggernaut push server"
     task :start, :roles => :app do
       puts "Starting juggernaut push server"
-      sudo "#{sudo} juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
+      sudo "juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
     end
     
     desc "Stops the juggernaut push server"
     task :stop, :roles => :app do
       puts "Stopping juggernaut push server"
-      sudo "#{sudo} juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}" 
+      sudo "juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}" 
     end
     
     desc "Restarts the juggernaut push server"

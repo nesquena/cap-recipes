@@ -41,9 +41,11 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Update code on server, apply migrations, and restart passenger server"
     task :with_migrations, :roles => :web do
-      deploy.update
-      deploy.migrate
-      deploy.restart
+      with_role(:web) do
+        deploy.update
+        deploy.migrate
+        deploy.restart
+      end
     end
 
     # ===============================================================
