@@ -6,6 +6,12 @@ Capistrano::Configuration.instance(true).load do
   # ===============================================================
 
   namespace :deploy do
+    
+    desc "Update the theme and delete cached files." 
+    task :default, :roles => :web do
+      deploy.update
+      deploy.restart
+    end
 
     # ===============================================================
     # SERVER MANAGEMENT
