@@ -1,48 +1,43 @@
-require 'rubygems'
-require 'rubygems/specification'
 require 'rake'
-require 'rake/gempackagetask'
-require 'spec/rake/spectask'
- 
-GEM = "cap-recipes"
-GEM_VERSION = "0.2.8"
-SUMMARY = "Collection of capistrano recipes for apache, passenger, memcache, juggernaut and backgroundrb"
-AUTHOR = "Nathan Esquenazi"
-EMAIL = "nesquena@gmail.com"
-HOMEPAGE = "http://caprecipes.rubyforge.org"
+require 'rake/testtask'
+require 'rake/rdoctask'
 
-spec = Gem::Specification.new do |s|
-  s.name = GEM
-  s.version = GEM_VERSION
-  s.platform = Gem::Platform::RUBY
-  s.summary = SUMMARY
-  s.require_paths = ['lib']
-  s.files = FileList['[A-Z]*', 'lib/**/*.rb', 'spec/**/*'].to_a
-  
-  s.author = AUTHOR
-  s.email = EMAIL
-  s.homepage = HOMEPAGE
-
-  s.rubyforge_project = GEM # GitHub bug, gem isn't being build when this miss
-end
-
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = %w(-fs --color)
-end
-  
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.gem_spec = spec
-end
- 
-desc "Install the gem locally"
-task :install => [:package] do
-  sh %{sudo gem install pkg/#{GEM}-#{GEM_VERSION}}
-end
- 
-desc "Create a gemspec file"
-task :make_spec do
-  File.open("#{GEM}.gemspec", "w") do |file|
-    file.puts spec.to_ruby
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name = "cap-recipes"
+    s.summary = %Q{Battle-tested capistrano recipes for passenger, apache, and more}
+    s.email = "nesquena@gmail.com"
+    s.homepage = "http://github.com/nesquena/cap-recipes"
+    s.description = "Battle-tested capistrano recipes for passenger, apache, and more"
+    s.authors = ["Nathan Esquenazi"]
   end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
+
+Rake::TestTask.new do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = false
+end
+
+Rake::RDocTask.new do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'cap-recipes'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+begin
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new do |t|
+    t.libs << 'test'
+    t.test_files = FileList['test/**/*_test.rb']
+    t.verbose = true
+  end
+rescue LoadError
+end
+
+task :default => :test
