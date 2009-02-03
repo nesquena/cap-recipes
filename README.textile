@@ -126,6 +126,48 @@ h4. Tasks
       :stop
       :restart
       :install
+      
+h2. EXAMPLE
+
+Here is a sample deploy.rb file using cap_recipes:
+
+<pre>
+<code>
+# =============================================================================
+# GENERAL SETTINGS
+# =============================================================================
+
+set :application,  "app_name"
+set :deploy_to,  "/var/apps/#{application}"
+set :scm, :git
+set :repository, "git@repos.site.com:/home/git/repos.git"
+
+# =============================================================================
+# CAP RECIPES
+# =============================================================================
+
+# Note this happens after the general settings have been defined
+require 'rubygems'
+require 'cap_recipes' 
+
+# PASSENGER
+set :base_ruby_path, '/opt/ruby-enterprise' # defaults to "/usr"
+set :apache_init_path, '/etc/init.d/apache2' # defaults to "/etc/init.d/apache2"
+
+# BACKGROUNDRB
+set :backgroundrb_log, "/var/log/backgroundrb.log" # defaults to "#{release_path}/log/backgroundrb.log"
+set :backgroundrb_host, "worker.site.com" # defaults to localhost
+set :backgroundrb_env, "staging" # defaults to production
+
+# JUGGERNAUT
+set :juggernaut_config, "/some/path/juggernaut.yml" # defaults to "#{current_path}/config/juggernaut.yml"
+set :juggernaut_pid, "/some/path/juggernaut.pid" # defaults to "#{current_path}/tmp/pids/juggernaut.pid"
+set :juggernaut_log, "/var/log/juggernaut.log" # defaults to #{release_path}/log/juggernaut.log
+
+# MEMCACHE
+set :memcache_init_path, "/etc/init.d/memcache" # defaults to "/etc/init.d/memcache"
+</code>
+</pre>
 
 h2. LICENSE:
 

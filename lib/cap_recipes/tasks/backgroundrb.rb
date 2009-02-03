@@ -60,8 +60,8 @@ Capistrano::Configuration.instance(true).load do
     desc "Repair permissions to allow user to perform all actions"
     task :repair_permissions, :roles => :app do
       puts "Applying correct permissions to allow for proper command execution"
-      sudo "chown -R #{user}:#{user} #{current_path}"
-      sudo "chown -R #{user}:#{user} #{current_path}/tmp"
+      try_sudo "chown -R #{user}:#{user} #{current_path}"
+      try_sudo "chown -R #{user}:#{user} #{current_path}/tmp"
     end
   end
   

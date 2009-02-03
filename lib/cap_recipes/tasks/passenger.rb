@@ -55,15 +55,15 @@ Capistrano::Configuration.instance(true).load do
     desc "Copies the shared/config/database yaml to release/config/"
     task :copy_config, :roles => :web do
       puts "Copying database configuration to release path"
-      sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+      try_sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
 
     desc "Repair permissions to allow user to perform all actions"
     task :repair_permissions, :roles => :web do
       puts "Applying correct permissions to allow for proper command execution"
-      sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
-      sudo "chown -R #{user}:#{user} #{current_path}"
-      sudo "chown -R #{user}:#{user} #{current_path}/tmp"
+      try_sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
+      try_sudo "chown -R #{user}:#{user} #{current_path}"
+      try_sudo "chown -R #{user}:#{user} #{current_path}/tmp"
     end
 
     desc "Displays the production log from the server locally"
@@ -81,7 +81,7 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Updates all installed ruby gems"
     task :gems, :roles => :web do
-      sudo "gem update"
+      try_sudo "gem update"
     end
     
     desc "Installs Phusion Passenger"
@@ -93,7 +93,7 @@ Capistrano::Configuration.instance(true).load do
   
     desc "Setup Passenger Module"
     task :passenger_apache_module, :roles => :web do
-      sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
+      try_sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       input = ''
       run "sudo #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
         next if out.chomp == input.chomp || out.chomp == ''
@@ -120,7 +120,7 @@ Capistrano::Configuration.instance(true).load do
       EOF
     
       put passenger_config, "/tmp/passenger"
-      sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
+      try_sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
       apache.restart
     end
     
