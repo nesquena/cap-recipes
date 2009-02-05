@@ -75,7 +75,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Pings the root localhost to startup passenger"
     task :ping, :roles => :web do
       puts "Pinging the web server to start passenger"
-      run "wget -O /dev/null #{local_ping_path}"
+      run "wget -O /dev/null #{local_ping_path} 2>/dev/null"
     end
   end
   
