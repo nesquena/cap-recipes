@@ -38,6 +38,7 @@ h3. Passenger
 h4. Configuration
 
  * base_ruby_path - the base path to the ruby installation [default: "/usr"]
+ * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
 The following files and folders are expected to exist:
  

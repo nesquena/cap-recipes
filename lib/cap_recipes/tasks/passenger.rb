@@ -1,7 +1,8 @@
 require 'cap_recipes/tasks/with_scope.rb'
 
 Capistrano::Configuration.instance(true).load do
-  set :base_ruby_path, '/usr'  
+  set :base_ruby_path, '/usr'
+  set :local_ping_path, 'http://localhost'
 
   # ===============================================================
   # DEPLOYMENT SCRIPTS
@@ -74,7 +75,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Pings the root localhost to startup passenger"
     task :ping, :roles => :web do
       puts "Pinging the web server to start passenger"
-      run "wget -O /dev/null http://localhost/ 2>/dev/null"
+      run "wget -O /dev/null #{local_ping_path}"
     end
   end
   
