@@ -10,20 +10,20 @@ Capistrano::Configuration.instance(true).load do
     desc "Stops the memcache server"
     task :stop, :roles => :app do
       puts "Stopping the memcache server"
-      try_sudo "#{memcache_init_path} stop"
+      try_sudo "nohup /etc/init.d/memcached stop &" 
     end
 
     desc "Starts the memcache server"
     task :start, :roles => :app do
       puts "Starting the memcache server"
-      try_sudo "#{memcache_init_path} start"
+      try_sudo "nohup /etc/init.d/memcached start &" 
     end
 
     desc "Restarts the memcache server"
     task :restart, :roles => :app do
       puts "Restarting the memcache server"
       memcache.stop
-      sleep(5)  # sleep for 5 seconds to make sure the server has mopped up everything
+      sleep(3)  # sleep for 3 seconds to make sure the server has mopped up everything
       memcache.start
     end
 
