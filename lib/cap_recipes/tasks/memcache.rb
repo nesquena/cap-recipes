@@ -40,5 +40,5 @@ Capistrano::Configuration.instance(true).load do
     end
   end
   
-  after "deploy:update_code", "memcache:restart" # clear cache after updating code
+  after "deploy:restart", "memcache:restart" # clear cache after updating code
 end
