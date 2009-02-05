@@ -71,6 +71,11 @@ Capistrano::Configuration.instance(true).load do
       stream "tail -f #{shared_path}/log/production.log"
     end
     
+    desc "Pings the root localhost to startup passenger"
+    task :ping, :roles => :web do
+      puts "Pinging the web server to start passenger"
+      run "wget -O /dev/null http://localhost/ 2>/dev/null"
+    end
   end
   
   # ===============================================================
@@ -149,4 +154,5 @@ Capistrano::Configuration.instance(true).load do
   after "deploy:update_code", "deploy:copy_config" # copy database.yml file to release path
   after "deploy:update_code", "sweep:cache" # clear cache after updating code
   after "deploy:restart"    , "deploy:repair_permissions" # fix the permissions to work properly
+  after "deploy:restart"    , "deploy:ping" # ping passenger to start the rails instance
 end
