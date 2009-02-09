@@ -99,9 +99,9 @@ Capistrano::Configuration.instance(true).load do
   
     desc "Setup Passenger Module"
     task :passenger_apache_module, :roles => :web do
-      try_sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
+      sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       input = ''
-      run "sudo #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
+      run "#{sudo} #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
         next if out.chomp == input.chomp || out.chomp == ''
         print out
         ch.send_data(input = $stdin.gets) if out =~ /(Enter|ENTER)/
@@ -126,7 +126,7 @@ Capistrano::Configuration.instance(true).load do
       EOF
     
       put passenger_config, "/tmp/passenger"
-      try_sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
+      sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
       apache.restart
     end
     
