@@ -101,10 +101,12 @@ Capistrano::Configuration.instance(true).load do
     task :passenger_apache_module, :roles => :web do
       sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       input = ''
-      run "#{sudo} #{base_ruby_path}/bin/passenger-install-apache2-module" do |ch, stream, out|
-        next if out.chomp == input.chomp || out.chomp == ''
-        print out
-        ch.send_data(input = $stdin.gets) if out =~ /(Enter|ENTER)/
+      sudo "#{base_ruby_path}/bin/passenger-install-apache2-module", :pty => true do |ch, stream, data|
+        if data =~ /Press\sEnter\sto\scontinue/ || data =~ /Press\sENTER\sto\scontinue/
+          ch.send_data("\n")
+        else
+          Capistrano::Configuration.default_io_proc.call(ch, stream, data)
+        end
       end
     end
 
