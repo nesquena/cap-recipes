@@ -7,9 +7,10 @@ Capistrano::Configuration.instance(true).load do
     # ===============================================================
     # UTILITY TASKS
     # ===============================================================
-    desc "Copies the shared/config/database yaml to release/config/"
-    task :copy_config, :roles => :web do
+    desc "Symlinks the shared/config/database yaml to release/config/"
+    task :symlink_db_config, :roles => :web do
       puts "Copying database configuration to release path"
+      try_sudo "rm #{release_path}/config/database.yml"
       try_sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
 
