@@ -1,5 +1,6 @@
 require 'cap_recipes/tasks/with_scope.rb'
 
+#TODO add something like require that a task named apache:restart exists
 Capistrano::Configuration.instance(true).load do
   set :base_ruby_path, '/usr'
 
@@ -12,8 +13,8 @@ Capistrano::Configuration.instance(true).load do
     desc "Installs Phusion Passenger"
     task :install, :roles => :web do
       puts 'Installing passenger module'
-      install.install_apache_module
-      install.update_config
+      install_apache_module
+      update_config
     end
 
     desc "Setup Passenger Module"
