@@ -7,7 +7,11 @@ h2. INSTALLATION
 
 h2. DESCRIPTION
 
-This is a collection of capistrano recipes which will grow to encompass many useful recipes. The intended use for these recipes is for a ruby project which deploys using Phusion Passenger and caches using memcached. In addition, recipes for the management of various daemon processes will be included as needed. Feel free to contribute to this and make it better!
+This is a collection of capistrano recipes which will grow to encompass many useful recipes.
+The intended use for these recipes is for a ruby project which deploys using Phusion Passenger and caches using memcached.
+In addition, recipes for the management of various daemon processes will be included as needed.
+Feel free to contribute to this and make it better!
+Any of the recipes can be used on their own (TODO).
 
 Currently included:
 
@@ -21,6 +25,8 @@ h2. SYNOPSIS
 
 To include any of these into your deploy.rb configuration file for Capistrano:
   
+   require 'cap_recipes/tasks/rails'
+   require 'cap_recipes/tasks/passenger_tasks'
    require 'cap_recipes/tasks/passenger'
    require 'cap_recipes/tasks/apache'
    require 'cap_recipes/tasks/backgroundrb'
@@ -33,60 +39,67 @@ Or to include and activate all of them:
 
 h2. USAGE
 
-h3. Passenger
 
+h3. General
 h4. Configuration
-
  * base_ruby_path - the base path to the ruby installation [default: "/usr"]
  * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
 The following files and folders are expected to exist:
- 
  * "#{base_ruby_path}/lib/ruby"
  * "#{base_ruby_path}/bin/ruby"
  * "#{base_ruby_path}/bin/gem"
 
 h4. Tasks
-
   deploy
     :start
     :stop
     :restart
     :with_migrations
-    :copy_config
-    :tail
   install
-    :passenger
     :gems
   sweep
-    :cache
-    :log
     :gems
+
     
 h3. Apache
-
 h4. Configuration
-
   * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
 
 h4. Tasks
-
   apache
     :stop
     :start
     :restart
     :install
-  
+
+
+h3. Passenger
+h4. Tasks
+  passenger
+    install
+      :install_apache_module
+      :update_config
+
+h3. Rails
+h4. Tasks
+  rails
+    :symlink_db_config
+    :repair_permissions
+    :tail - tail production log
+    :ping - ping the server, to start it
+    sweep
+      :cache
+      :log
+
+
 h3. Backgroundrb
-
 h4. Configuration
-
   * backgroundrb_log - the path to the backgroundrb log file
   * backgroundrb_host - the background host machine ip [default: 'localhost']
   * backgroundrb_env - the rails environment [default: 'production']
 
 h4. Tasks
-
   tasks:
     backgroundrb
       :stop
@@ -95,16 +108,14 @@ h4. Tasks
       :copy_config
       :tail
 
+
 h3. Juggernaut
-
 h4. Configuration
-
   * juggernaut_config - path to juggernaut config file [default: "#{current_path}/config/juggernaut.yml"]
   * juggernaut_pid - path to juggernaut pid file [default: "#{current_path}/tmp/pids/juggernaut.pid"]
   * juggernaut_log - path to juggernaut log file [default: "#{current_path}/log/juggernaut.log"]
 
 h4. Tasks
-
   tasks:
     juggernaut
       :start
@@ -112,22 +123,22 @@ h4. Tasks
       :restart
       :copy_config
       :tail
-      
+
+
 h3. Memcache
-
 h4. Configuration
-
   * memcache_init_path - path to memcache config file [default: "/etc/init.d/memcache"]
 
 h4. Tasks
-
   tasks:
     memcache
       :start
       :stop
       :restart
       :install
-      
+
+
+
 h2. EXAMPLE
 
 Here is a sample deploy.rb file using cap_recipes:
