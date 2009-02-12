@@ -40,8 +40,10 @@ Or to include and activate all of them:
 h2. USAGE
 
 
-h3. General  
-h4. Configuration  
+h3. General
+
+h4. Configuration
+
  * base_ruby_path - the base path to the ruby installation [default: "/usr"]
  * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
@@ -50,7 +52,8 @@ The following files and folders are expected to exist:
  * "#{base_ruby_path}/bin/ruby"
  * "#{base_ruby_path}/bin/gem"
 
-h4. Tasks  
+h4. Tasks
+
   deploy
     :start
     :stop
@@ -63,10 +66,13 @@ h4. Tasks
 
     
 h3. Apache
+
 h4. Configuration
+
   * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
 
 h4. Tasks
+
   apache
     :stop
     :start
@@ -75,14 +81,18 @@ h4. Tasks
 
 
 h3. Passenger
+
 h4. Tasks
+
   passenger
     install
       :install_apache_module
       :update_config
 
 h3. Rails
+
 h4. Tasks
+
   rails
     :symlink_db_config
     :repair_permissions
@@ -94,12 +104,15 @@ h4. Tasks
 
 
 h3. Backgroundrb
+
 h4. Configuration
+
   * backgroundrb_log - the path to the backgroundrb log file
   * backgroundrb_host - the background host machine ip [default: 'localhost']
   * backgroundrb_env - the rails environment [default: 'production']
 
 h4. Tasks
+
   tasks:
     backgroundrb
       :stop
@@ -110,12 +123,15 @@ h4. Tasks
 
 
 h3. Juggernaut
+
 h4. Configuration
+
   * juggernaut_config - path to juggernaut config file [default: "#{current_path}/config/juggernaut.yml"]
   * juggernaut_pid - path to juggernaut pid file [default: "#{current_path}/tmp/pids/juggernaut.pid"]
   * juggernaut_log - path to juggernaut log file [default: "#{current_path}/log/juggernaut.log"]
 
 h4. Tasks
+
   tasks:
     juggernaut
       :start
@@ -126,10 +142,13 @@ h4. Tasks
 
 
 h3. Memcache
+
 h4. Configuration
+
   * memcache_init_path - path to memcache config file [default: "/etc/init.d/memcache"]
 
 h4. Tasks
+
   tasks:
     memcache
       :start
