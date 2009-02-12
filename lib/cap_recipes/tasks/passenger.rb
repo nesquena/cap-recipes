@@ -1,15 +1,12 @@
-require 'cap_recipes/tasks/with_scope.rb'
+require 'cap_recipes/tasks/with_scope'
+require 'cap_recipes/tasks/passenger_tasks'
+require 'cap_recipes/tasks/rails'
 
 Capistrano::Configuration.instance(true).load do
-  set :base_ruby_path, '/usr'
-  set :local_ping_path, 'http://localhost'
-
   # ===============================================================
   # DEPLOYMENT SCRIPTS
   # ===============================================================
-
   namespace :deploy do
-    
     desc "Default deploy action" 
     task :default, :roles => :web do
       with_role(:web) do
@@ -37,7 +34,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Restarts the phusion passenger server"
     task :restart, :roles => :web do
       puts "Restarting the application"
-      run "touch #{current_path}/tmp/restart.txt"
+      passenger.restart
     end
 
     desc "Update code on server, apply migrations, and restart passenger server"
@@ -47,35 +44,6 @@ Capistrano::Configuration.instance(true).load do
         deploy.migrate
         deploy.restart
       end
-    end
-
-    # ===============================================================
-    # UTILITY TASKS
-    # ===============================================================
-
-    desc "Copies the shared/config/database yaml to release/config/"
-    task :copy_config, :roles => :web do
-      puts "Copying database configuration to release path"
-      try_sudo "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    end
-
-    desc "Repair permissions to allow user to perform all actions"
-    task :repair_permissions, :roles => :web do
-      puts "Applying correct permissions to allow for proper command execution"
-      try_sudo "chmod -R 744 #{current_path}/log #{current_path}/tmp"
-      try_sudo "chown -R #{user}:#{user} #{current_path}"
-      try_sudo "chown -R #{user}:#{user} #{current_path}/tmp"
-    end
-
-    desc "Displays the production log from the server locally"
-    task :tail, :roles => :web do
-      stream "tail -f #{shared_path}/log/production.log"
-    end
-    
-    desc "Pings the root localhost to startup passenger"
-    task :ping, :roles => :web do
-      puts "Pinging the web server to start passenger"
-      run "wget -O /dev/null #{local_ping_path} 2>/dev/null"
     end
   end
   
@@ -90,72 +58,13 @@ Capistrano::Configuration.instance(true).load do
       try_sudo "gem update"
     end
     
-    desc "Installs Phusion Passenger"
-    task :passenger, :roles => :web do
-      puts 'Installing passenger module'
-      install.passenger_apache_module
-      install.config_passenger
-    end
-  
-    desc "Setup Passenger Module"
-    task :passenger_apache_module, :roles => :web do
-      sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
-      input = ''
-      sudo "#{base_ruby_path}/bin/passenger-install-apache2-module", :pty => true do |ch, stream, data|
-        if data =~ /Press\sEnter\sto\scontinue/ || data =~ /Press\sENTER\sto\scontinue/
-          ch.send_data("\n")
-        else
-          Capistrano::Configuration.default_io_proc.call(ch, stream, data)
-        end
-      end
-    end
-
-    desc "Configure Passenger"
-    task :config_passenger, :roles => :web do
-      version = 'ERROR' # default
-    
-      # passenger (2.X.X, 1.X.X)
-      run("gem list | grep passenger") do |ch, stream, data|
-        version = data.sub(/passenger \(([^,]+).*?\)/,"\\1").strip
-      end
-
-      puts "  passenger version #{version} configured"
-
-      passenger_config =<<-EOF
-        LoadModule passenger_module #{base_ruby_path}/lib/ruby/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so
-        PassengerRoot #{base_ruby_path}/lib/ruby/gems/1.8/gems/passenger-#{version}
-        PassengerRuby #{base_ruby_path}/bin/ruby
-      EOF
-    
-      put passenger_config, "/tmp/passenger"
-      sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
-      apache.restart
-    end
-    
-  end
-
-  # ===============================================================
-  # MAINTENANCE TASKS
-  # ===============================================================
-  namespace :sweep do
-    desc "Clear file-based fragment and action caching"
-    task :log, :roles => :web  do
-      puts "Sweeping all the log files"
-      run "cd #{current_path} && #{sudo} rake log:clear RAILS_ENV=production"
-    end
-
-    desc "Clear file-based fragment and action caching"
-    task :cache, :roles => :web do
-      puts "Sweeping the fragment and action cache stores"
-      run "cd #{release_path} && #{sudo} rake tmp:cache:clear RAILS_ENV=production"
-    end    
   end
 
   # ===============================================================
   # TASK CALLBACKS
   # ===============================================================
-  after "deploy:update_code", "deploy:copy_config" # copy database.yml file to release path
-  after "deploy:update_code", "sweep:cache" # clear cache after updating code
-  after "deploy:restart"    , "deploy:repair_permissions" # fix the permissions to work properly
-  after "deploy:restart"    , "deploy:ping" # ping passenger to start the rails instance
+  after "deploy:update_code", "rails:copy_config" # copy database.yml file to release path
+  after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
+  after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
+  after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
 end
