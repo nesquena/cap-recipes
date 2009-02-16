@@ -25,9 +25,8 @@ h2. SYNOPSIS
 
 To include any of these into your deploy.rb configuration file for Capistrano:
   
-   require 'cap_recipes/tasks/rails'
-   require 'cap_recipes/tasks/passenger_tasks'
    require 'cap_recipes/tasks/passenger'
+   require 'cap_recipes/tasks/rails'
    require 'cap_recipes/tasks/apache'
    require 'cap_recipes/tasks/backgroundrb'
    require 'cap_recipes/tasks/juggernaut'
@@ -36,11 +35,39 @@ To include any of these into your deploy.rb configuration file for Capistrano:
 Or to include and activate all of them:
 
    require 'cap_recipes'
+   
+By default, these recipes will include both tasks for managing (start/stop/restart) as well as tasks for installing when available. 
+The recipes also include hooks which tie all the recipes into the deployment process as appropriate.
+
+If you wish to cherry-pick specific tasks, you can also include the management tasks, installation tasks and deploy hooks seperately.
+
+   require 'cap_recipes/tasks/memcache/install.rb' # memcache installation tasks
+   require 'cap_recipes/tasks/memcache/manage.rb'  # memcache daemon management tasks
+   require 'cap_recipes/tasks/memcache/hooks.rb'   # memcache deployment hooks
 
 h2. USAGE
 
+h3. Apache
 
-h3. General
+h4. Configuration
+
+  * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
+
+h4. Tasks
+
+h5. manage.rb
+
+  apache
+    :stop
+    :start
+    :restart
+    
+h5. install.rb
+
+  apache
+    :install
+
+h3. Passenger
 
 h4. Configuration
 
@@ -54,55 +81,41 @@ The following files and folders are expected to exist:
 
 h4. Tasks
 
+h5. manage.rb
+
   deploy
     :start
     :stop
     :restart
     :with_migrations
-  install
-    :gems
-  sweep
-    :gems
+      
+h5. install.rb
 
-    
-h3. Apache
-
-h4. Configuration
-
-  * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
-
-h4. Tasks
-
-  apache
-    :stop
-    :start
-    :restart
-    :install
-
-
-h3. Passenger
-
-h4. Tasks
-
-  passenger
-    install
-      :install_apache_module
-      :update_config
+ passenger
+   :install
 
 h3. Rails
 
 h4. Tasks
 
+h5. tasks.rb
+
   rails
     :symlink_db_config
     :repair_permissions
     :tail - tail production log
-    :ping - ping the server, to start it
+    :ping - ping the server to start it
     sweep
       :cache
       :log
+      
+h5. hooks.rb
 
-
+  after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
+  after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
+  after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
+  after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
+      
 h3. Backgroundrb
 
 h4. Configuration
@@ -113,14 +126,20 @@ h4. Configuration
 
 h4. Tasks
 
-  tasks:
-    backgroundrb
-      :stop
-      :start
-      :restart
-      :copy_config
-      :tail
+h5. manage.rb
 
+  backgroundrb
+    :stop
+    :start
+    :restart
+    :symlink_config
+    :tail
+      
+h5. hooks.rb
+
+  after "deploy:update_code"   , "backgroundrb:symlink_config" # copy backgroundrb config to release
+  after "deploy:restart"       , "backgroundrb:restart"     # restart backgroundrb daemon
+  after "backgroundrb:restart" , "backgroundrb:repair_permissions" # restart backgroundrb damon
 
 h3. Juggernaut
 
@@ -132,14 +151,19 @@ h4. Configuration
 
 h4. Tasks
 
-  tasks:
-    juggernaut
-      :start
-      :stop
-      :restart
-      :copy_config
-      :tail
+h5. manage.rb
 
+  juggernaut
+    :start
+    :stop
+    :restart
+    :symlink_config
+    :tail
+
+h5. hooks.rb
+
+  after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
+  after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
 
 h3. Memcache
 
@@ -149,15 +173,22 @@ h4. Configuration
 
 h4. Tasks
 
-  tasks:
-    memcache
-      :start
-      :stop
-      :restart
-      :install
+h5. manage.rb
 
+  memcache
+    :start
+    :stop
+    :restart
+    
+h5. install.rb
 
+  memcache
+    :install
+    
+h5. hooks
 
+  after "deploy:restart", "memcache:restart" # clear cache after updating code
+    
 h2. EXAMPLE
 
 Here is a sample deploy.rb file using cap_recipes:

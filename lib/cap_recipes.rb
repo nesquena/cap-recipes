@@ -1,1 +1,1 @@
-Dir[File.join(File.dirname(__FILE__), 'cap_recipes/**/*.rb')].sort.each { |lib| require lib }
+Dir[File.join(File.dirname(__FILE__), 'cap_recipes/tasks/*.rb')].sort.each { |lib| require lib }
