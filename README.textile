@@ -98,7 +98,7 @@ h3. Rails
 
 h4. Tasks
 
-h5. tasks.rb
+h5. manage.rb
 
   rails
     :symlink_db_config
