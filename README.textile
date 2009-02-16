@@ -1,17 +1,11 @@
 h1. cap-recipes
 
-h2. INSTALLATION
-
- * gem sources -a http://gems.github.com/
- * sudo gem install nesquena-cap-recipes
-
 h2. DESCRIPTION
 
-This is a collection of capistrano recipes which will grow to encompass many useful recipes.
-The intended use for these recipes is for a ruby project which deploys using Phusion Passenger and caches using memcached.
-In addition, recipes for the management of various daemon processes will be included as needed.
+A collection of useful capistrano recipes.
+Best suited for ruby projects which deploy using Phusion Passenger.
+
 Feel free to contribute to this and make it better!
-Any of the recipes can be used on their own (TODO).
 
 Currently included:
 
@@ -20,31 +14,33 @@ Currently included:
  * Memcache Process
  * Juggernaut Daemon
  * Backgroundrb Server
- 
-h2. SYNOPSIS
 
-To include any of these into your deploy.rb configuration file for Capistrano:
-  
-   require 'cap_recipes/tasks/passenger'
-   require 'cap_recipes/tasks/rails'
-   require 'cap_recipes/tasks/apache'
-   require 'cap_recipes/tasks/backgroundrb'
-   require 'cap_recipes/tasks/juggernaut'
-   require 'cap_recipes/tasks/memcache'
-   
-Or to include and activate all of them:
+h2. INSTALLATION
 
+   sudo gem install nesquena-cap-recipes -s http://gems.github.com/
+
+h2. SETUP
+
+Include into your deploy.rb configuration file for Capistrano:
+
+   # use the complete deployment process
    require 'cap_recipes'
+
+   # OR
+   # use a single slice of the deployment process
+   # (use hooks which tie all the recipes into the deployment process,
+   # tasks for managing and tasks for installing):
+   # substitude memcache with: passenger, rails, apache, backgroundrb, juggernaut
+   require 'cap_recipes/tasks/memcache'
+
+   # OR
+   # only use managing tasks:
+   require 'cap_recipes/tasks/memcache/manage'
+
+   # OR
+   #only use install tasks:
+   require 'cap_recipes/tasks/memcache/install'
    
-By default, these recipes will include both tasks for managing (start/stop/restart) as well as tasks for installing when available. 
-The recipes also include hooks which tie all the recipes into the deployment process as appropriate.
-
-If you wish to cherry-pick specific tasks, you can also include the management tasks, installation tasks and deploy hooks seperately.
-
-   require 'cap_recipes/tasks/memcache/install.rb' # memcache installation tasks
-   require 'cap_recipes/tasks/memcache/manage.rb'  # memcache daemon management tasks
-   require 'cap_recipes/tasks/memcache/hooks.rb'   # memcache deployment hooks
-
 h2. USAGE
 
 h3. Apache
