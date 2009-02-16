@@ -1,7 +1,5 @@
 h1. cap-recipes
 
-h2. DESCRIPTION
-
 A collection of useful capistrano recipes.
 Best suited for ruby projects which deploy using Phusion Passenger.
 
@@ -19,27 +17,25 @@ h2. INSTALLATION
 
    sudo gem install nesquena-cap-recipes -s http://gems.github.com/
 
-h2. SETUP
-
 Include into your deploy.rb configuration file for Capistrano:
 
-   # use the complete deployment process
-   require 'cap_recipes'
+  # use the complete deployment process
+  require 'cap_recipes'
 
-   # OR
-   # use a single slice of the deployment process
-   # (use hooks which tie all the recipes into the deployment process,
-   # tasks for managing and tasks for installing):
-   # substitude memcache with: passenger, rails, apache, backgroundrb, juggernaut
-   require 'cap_recipes/tasks/memcache'
+  # OR
+  # use a single slice of the deployment process
+  # (use hooks which tie all the recipes into the deployment process,
+  # tasks for managing and tasks for installing):
+  # substitude memcache with: passenger, rails, apache, backgroundrb, juggernaut
+  require 'cap_recipes/tasks/memcache'
 
-   # OR
-   # only use managing tasks:
-   require 'cap_recipes/tasks/memcache/manage'
+  # OR
+  # only use managing tasks:
+  require 'cap_recipes/tasks/memcache/manage'
 
-   # OR
-   #only use install tasks:
-   require 'cap_recipes/tasks/memcache/install'
+  # OR
+  #only use install tasks:
+  require 'cap_recipes/tasks/memcache/install'
    
 h2. USAGE
 
