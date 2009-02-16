@@ -19,6 +19,8 @@ h2. INSTALLATION
 
 Include into your deploy.rb configuration file for Capistrano:
 
+<pre>
+<code>
   # use the complete deployment process
   require 'cap_recipes'
 
@@ -36,6 +38,8 @@ Include into your deploy.rb configuration file for Capistrano:
   # OR
   #only use install tasks:
   require 'cap_recipes/tasks/memcache/install'
+</code>
+</pre>
    
 h2. USAGE
 
