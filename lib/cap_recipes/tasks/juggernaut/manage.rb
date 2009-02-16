@@ -31,8 +31,8 @@ Capistrano::Configuration.instance(true).load do
     # FILE MANAGEMENT
     # ===============================================================  
     
-    desc "Copies the shared/config/juggernaut yaml to release/config/"
-    task :copy_config, :roles => :app do
+    desc "Symlinks the shared/config/juggernaut yaml to release/config/"
+    task :symlink_config, :roles => :app do
       try_sudo "ln -s #{shared_path}/config/juggernaut.yml #{release_path}/config/juggernaut.yml"
     end
     

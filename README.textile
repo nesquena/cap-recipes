@@ -111,7 +111,7 @@ h5. tasks.rb
       
 h5. hooks.rb
 
-  after "deploy:update_code", "rails:copy_config" # copy database.yml file to release path
+  after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
   after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
   after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
   after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
@@ -132,12 +132,12 @@ h5. manage.rb
     :stop
     :start
     :restart
-    :copy_config
+    :symlink_config
     :tail
       
 h5. hooks.rb
 
-  after "deploy:update_code"   , "backgroundrb:copy_config" # copy backgroundrb config to release
+  after "deploy:update_code"   , "backgroundrb:symlink_config" # copy backgroundrb config to release
   after "deploy:restart"       , "backgroundrb:restart"     # restart backgroundrb daemon
   after "backgroundrb:restart" , "backgroundrb:repair_permissions" # restart backgroundrb damon
 
@@ -157,12 +157,12 @@ h5. manage.rb
     :start
     :stop
     :restart
-    :copy_config
+    :symlink_config
     :tail
 
 h5. hooks.rb
 
-  after "deploy:update_code", "juggernaut:copy_config" # copy juggernaut.yml to release
+  after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
   after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
 
 h3. Memcache

@@ -10,7 +10,7 @@ Capistrano::Configuration.instance(true).load do
         restart
       end
     end
-
+    
     desc "Stops the phusion passenger server"
     task :stop, :roles => :web do
       puts "Stopping rails web server"

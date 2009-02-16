@@ -43,12 +43,8 @@ Capistrano::Configuration.instance(true).load do
     # FILE MANAGEMENT
     # ===============================================================  
     
-    desc "Copies the shared/config/backgroundrb yaml to release/config/"
-    task :copy_config, :roles => :app do
-      on_rollback {
-        puts "***** File shared/config/backgroundrb.yml is missing. Make sure you have run backgroundrb:configure first. *****"
-      }
-      
+    desc "Symlinks the shared/config/backgroundrb yaml to release/config/"
+    task :symlink_config, :roles => :app do
       run "ln -s #{shared_path}/config/backgroundrb.yml #{release_path}/config/backgroundrb.yml"
     end
     
