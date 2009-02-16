@@ -17,12 +17,6 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-Rake::TestTask.new do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
-end
-
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'cap-recipes'
@@ -41,4 +35,11 @@ begin
 rescue LoadError
 end
 
-task :default => :test
+desc "Run all specs in spec directory"
+task :spec do |t|
+  options = "--colour --format progress --loadby --reverse"
+  files = FileList['spec/**/*_spec.rb']
+  system("spec #{options} #{files}")
+end
+
+task :default => :spec
