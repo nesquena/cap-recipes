@@ -5,20 +5,15 @@ Capistrano::Configuration.instance(true).load do
   set :base_ruby_path, '/usr'
 
   namespace :passenger do
-    desc "Restarts the phusion passenger server"
-    task :restart, :roles => :web do
-      run "touch #{current_path}/tmp/restart.txt"
-    end
-
     desc "Installs Phusion Passenger"
     task :install, :roles => :web do
       puts 'Installing passenger module'
-      install_apache_module
+      enable_apache_module
       update_config
     end
 
     desc "Setup Passenger Module"
-    task :install_apache_module, :roles => :web do
+    task :enable_apache_module, :roles => :web do
       sudo "#{base_ruby_path}/bin/gem install passenger --no-ri --no-rdoc"
       sudo "#{base_ruby_path}/bin/passenger-install-apache2-module", :pty => true do |ch, stream, data|
         if data =~ /Press\sEnter\sto\scontinue/ || data =~ /Press\sENTER\sto\scontinue/

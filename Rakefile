@@ -1,3 +1,4 @@
+# rake version:bump && rake release && rake install && sudo gem cleanup
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'

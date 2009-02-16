@@ -25,9 +25,8 @@ h2. SYNOPSIS
 
 To include any of these into your deploy.rb configuration file for Capistrano:
   
-   require 'cap_recipes/tasks/rails'
-   require 'cap_recipes/tasks/passenger_tasks'
    require 'cap_recipes/tasks/passenger'
+   require 'cap_recipes/tasks/rails'
    require 'cap_recipes/tasks/apache'
    require 'cap_recipes/tasks/backgroundrb'
    require 'cap_recipes/tasks/juggernaut'
@@ -36,6 +35,15 @@ To include any of these into your deploy.rb configuration file for Capistrano:
 Or to include and activate all of them:
 
    require 'cap_recipes'
+   
+By default, these recipes will include both tasks for managing (start/stop/restart) as well as tasks for installing when available. 
+The recipes also include hooks which tie all the recipes into the deployment process as appropriate.
+
+If you wish to cherry-pick specific tasks, you can also include the management tasks, installation tasks and deploy hooks seperately.
+
+   require 'cap_recipes/tasks/memcache/install.rb' # memcache installation tasks
+   require 'cap_recipes/tasks/memcache/manage.rb'  # memcache daemon management tasks
+   require 'cap_recipes/tasks/memcache/hooks.rb'   # memcache deployment hooks
 
 h2. USAGE
 
@@ -64,7 +72,6 @@ h4. Tasks
   sweep
     :gems
 
-    
 h3. Apache
 
 h4. Configuration
@@ -78,7 +85,6 @@ h4. Tasks
     :start
     :restart
     :install
-
 
 h3. Passenger
 
@@ -101,8 +107,7 @@ h4. Tasks
     sweep
       :cache
       :log
-
-
+      
 h3. Backgroundrb
 
 h4. Configuration
