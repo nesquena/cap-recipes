@@ -169,6 +169,7 @@ h4. Configuration
   * memcache_size - the total size of memory to use [default: 64]
   * memcache_port - the port to start memcache [default: '11211']
   * memcache_host - the host for memcache [default: '127.0.0.1']
+  * memcache_user - the user to run memcache [default: 'nobody']
 
 h4. Tasks
 

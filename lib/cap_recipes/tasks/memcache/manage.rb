@@ -4,6 +4,7 @@ Capistrano::Configuration.instance(true).load do
   set :memcache_size, '64'
   set :memcache_port, '11211'
   set :memcache_host, '127.0.0.1'
+  set :memcache_user, 'nobody'
 
   namespace :memcache do
     
@@ -16,7 +17,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Starts the memcache server"
     task :start, :roles => :app do
       puts "Starting the memcache server"
-      try_sudo "memcached -m #{memcache_size} -p #{memcache_port} -l #{memcache_host}"
+      try_sudo "memcached -m #{memcache_size} -p #{memcache_port} -l #{memcache_host} -u #{memcache_user}"
     end
 
     desc "Restarts the memcache server"
