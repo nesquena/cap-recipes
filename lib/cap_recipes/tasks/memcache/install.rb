@@ -1,7 +1,5 @@
 Capistrano::Configuration.instance(true).load do
 
-  set :memcache_init_path, "/etc/init.d/memcached"
-
   # ===============================================================
   # SERVER MANAGEMENT
   # ===============================================================

@@ -1,19 +1,22 @@
 Capistrano::Configuration.instance(true).load do
 
   set :memcache_init_path, "/etc/init.d/memcached"
+  set :memcache_size, '64'
+  set :memcache_port, '11211'
+  set :memcache_host, '127.0.0.1'
 
   namespace :memcache do
     
     desc "Stops the memcache server"
     task :stop, :roles => :app do
       puts "Stopping the memcache server"
-      try_sudo "nohup /etc/init.d/memcached stop &" 
+      try_sudo "killall -s TERM memcached" 
     end
 
     desc "Starts the memcache server"
     task :start, :roles => :app do
       puts "Starting the memcache server"
-      try_sudo "nohup /etc/init.d/memcached start &" 
+      try_sudo "memcached -m #{memcache_size} -p #{memcache_port} -l #{memcache_host}"
     end
 
     desc "Restarts the memcache server"

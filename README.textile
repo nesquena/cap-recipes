@@ -166,6 +166,9 @@ h3. Memcache
 h4. Configuration
 
   * memcache_init_path - path to memcache config file [default: "/etc/init.d/memcache"]
+  * memcache_size - the total size of memory to use [default: 64]
+  * memcache_port - the port to start memcache [default: '11211']
+  * memcache_host - the host for memcache [default: '127.0.0.1']
 
 h4. Tasks
 
