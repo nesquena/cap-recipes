@@ -7,9 +7,9 @@ Feel free to contribute to this and make it better!
 
 Currently included:
 
- * Phusion Passenger (Setup and Deployment)
  * Apache Server
- * Memcache Process
+ * Phusion Passenger (Setup and Deployment)
+ * Memcache Process (Setup and Deployment)
  * Juggernaut Daemon
  * Backgroundrb Server
  * DelayedJob Worker
