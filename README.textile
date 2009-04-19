@@ -12,6 +12,7 @@ Currently included:
  * Memcache Process
  * Juggernaut Daemon
  * Backgroundrb Server
+ * DelayedJob Worker
 
 h2. INSTALLATION
 
@@ -28,7 +29,7 @@ Include into your deploy.rb configuration file for Capistrano:
   # use a single slice of the deployment process
   # (use hooks which tie all the recipes into the deployment process,
   # tasks for managing and tasks for installing):
-  # substitude memcache with: passenger, rails, apache, backgroundrb, juggernaut
+  # substitute memcache with: passenger, rails, apache, backgroundrb, delayed_job, juggernaut
   require 'cap_recipes/tasks/memcache'
 
   # OR
@@ -40,10 +41,12 @@ Include into your deploy.rb configuration file for Capistrano:
   require 'cap_recipes/tasks/memcache/install'
 </code>
 </pre>
-   
+
 h2. USAGE
 
 h3. Apache
+
+These recipes manage the apache web server
 
 h4. Configuration
 
@@ -64,6 +67,8 @@ h5. install.rb
     :install
 
 h3. Passenger
+
+These recipes manage the passenger module for apache
 
 h4. Configuration
 
@@ -92,6 +97,8 @@ h5. install.rb
 
 h3. Rails
 
+These recipes support rails-specific functionality
+
 h4. Tasks
 
 h5. manage.rb
@@ -111,8 +118,34 @@ h5. hooks.rb
   after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
   after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
   after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
-      
+
+h3. DelayedJob
+
+These recipes are for tobi's delayed_job plugin for background job queue processing
+
+h4. Configuration
+
+  * delayed_script_path - the path to the delayed job script [default: 'script/delayed_job']
+  * delayed_job_env - the rails environment [default: 'production']
+
+h4. Tasks
+
+h5. manage.rb
+
+  delayed_job
+    :stop
+    :start
+    :restart
+
+h5. hooks.rb
+
+  after "deploy:start",   "delayed_job:start"
+  after "deploy:stop",    "delayed_job:stop"
+  after "deploy:restart", "delayed_job:restart"
+
 h3. Backgroundrb
+
+These recipes are for backgroundrb job queue processing
 
 h4. Configuration
 
@@ -139,6 +172,8 @@ h5. hooks.rb
 
 h3. Juggernaut
 
+These recipes are for managing the juggernaut push server
+
 h4. Configuration
 
   * juggernaut_config - path to juggernaut config file [default: "#{current_path}/config/juggernaut.yml"]
@@ -162,6 +197,8 @@ h5. hooks.rb
   after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
 
 h3. Memcache
+
+These recipes are for managing the memcached caching mechanism
 
 h4. Configuration
 
@@ -210,23 +247,31 @@ set :repository, "git@repos.site.com:/home/git/repos.git"
 
 # Note this happens after the general settings have been defined
 require 'rubygems'
-require 'cap_recipes' 
 
 # PASSENGER
+require 'cap_recipes/tasks/passenger'
 set :base_ruby_path, '/opt/ruby-enterprise' # defaults to "/usr"
 set :apache_init_path, '/etc/init.d/apache2' # defaults to "/etc/init.d/apache2"
 
 # BACKGROUNDRB
+require 'cap_recipes/tasks/backgroundrb'
 set :backgroundrb_log, "/var/log/backgroundrb.log" # defaults to "#{release_path}/log/backgroundrb.log"
 set :backgroundrb_host, "worker.site.com" # defaults to localhost
 set :backgroundrb_env, "staging" # defaults to production
 
+# DELAYED_JOB
+require 'cap_recipes/tasks/delayed_job'
+set :delayed_script_path, 'script/djworker' # defaults to 'script/delayed_job'
+set :delayed_job_env, 'staging' # defaults to production
+
 # JUGGERNAUT
+require 'cap_recipes/tasks/juggernaut'
 set :juggernaut_config, "/some/path/juggernaut.yml" # defaults to "#{current_path}/config/juggernaut.yml"
 set :juggernaut_pid, "/some/path/juggernaut.pid" # defaults to "#{current_path}/tmp/pids/juggernaut.pid"
 set :juggernaut_log, "/var/log/juggernaut.log" # defaults to #{release_path}/log/juggernaut.log
 
 # MEMCACHE
+require 'cap_recipes/tasks/memcache'
 set :memcache_init_path, "/etc/init.d/memcache" # defaults to "/etc/init.d/memcache"
 </code>
 </pre>
