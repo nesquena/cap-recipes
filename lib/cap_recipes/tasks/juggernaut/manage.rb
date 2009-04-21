@@ -2,6 +2,7 @@ Capistrano::Configuration.instance(true).load do
   set :juggernaut_config, "#{current_path}/config/juggernaut.yml"
   set :juggernaut_pid, "#{current_path}/tmp/pids/juggernaut.pid"
   set :juggernaut_log, "#{current_path}/log/juggernaut.log"
+  set :base_ruby_path,    '/usr'
   
   namespace :juggernaut do   
              
@@ -12,13 +13,13 @@ Capistrano::Configuration.instance(true).load do
     desc "Starts the juggernaut push server"
     task :start, :roles => :app do
       puts "Starting juggernaut push server"
-      try_sudo "juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
+      try_sudo "#{base_ruby_path}/bin/juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
     end
     
     desc "Stops the juggernaut push server"
     task :stop, :roles => :app do
       puts "Stopping juggernaut push server"
-      try_sudo "juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}" 
+      try_sudo "#{base_ruby_path}/bin/juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}" 
     end
     
     desc "Restarts the juggernaut push server"

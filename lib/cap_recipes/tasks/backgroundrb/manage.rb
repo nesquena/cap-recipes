@@ -12,12 +12,12 @@ Capistrano::Configuration.instance(true).load do
     
     desc "Stops the backgroundrb worker processes"
     task :stop, :roles => :app do
-      run "cd #{current_path} && #{sudo} #{base_ruby_path}/bin/ruby script/backgroundrb stop -e #{backgroundrb_env}"
+      run "cd #{current_path} && #{sudo} #{base_ruby_path}/bin/ruby script/backgroundrb stop"
     end
     
     desc "Starts the backgroundrb worker processes"
     task :start, :roles => :app do
-      run "cd #{current_path} && #{sudo} nohup #{base_ruby_path}/bin/ruby script/backgroundrb start -e #{backgroundrb_env}"
+      run "cd #{current_path} && #{sudo} nohup #{base_ruby_path}/bin/ruby script/backgroundrb start"
     end
     
     desc "Restarts a running backgroundrb server."
