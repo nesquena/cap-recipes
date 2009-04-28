@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.8"
+  s.version = "0.3.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2009-04-21}
+  s.date = %q{2009-04-28}
   s.description = %q{Battle-tested capistrano recipes for passenger, apache, and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
