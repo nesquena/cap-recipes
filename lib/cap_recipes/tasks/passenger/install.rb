@@ -3,6 +3,7 @@ require 'cap_recipes/tasks/with_scope.rb'
 #TODO add something like require that a task named apache:restart exists
 Capistrano::Configuration.instance(true).load do
   set :base_ruby_path, '/usr'
+  set :confd_passenger_filename, 'passenger'
 
   namespace :passenger do
     desc "Installs Phusion Passenger"
@@ -36,7 +37,7 @@ Capistrano::Configuration.instance(true).load do
       EOF
 
       put passenger_config, "/tmp/passenger"
-      sudo "mv /tmp/passenger /etc/apache2/conf.d/passenger"
+      sudo "mv /tmp/passenger /etc/apache2/conf.d/#{confd_passenger_filename}"
       apache.restart
     end
 
