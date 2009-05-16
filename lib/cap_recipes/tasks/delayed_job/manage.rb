@@ -16,7 +16,11 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Restart delayed_job process"
     task :restart, :roles => :app do
-      run "cd #{current_path} && #{sudo} #{base_ruby_path}/bin/ruby #{delayed_script_path} restart #{delayed_job_env}"
+      # run "cd #{current_path} && #{sudo} #{base_ruby_path}/bin/ruby #{delayed_script_path} restart #{delayed_job_env}"
+      delayed_job.stop
+      sleep(4)
+      try_sudo "killall -s TERM delayed_job"
+      delayed_job.start
     end
   end
 end
