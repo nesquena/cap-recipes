@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.9"
+  s.version = "0.3.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2009-04-28}
+  s.date = %q{2009-05-16}
   s.description = %q{Battle-tested capistrano recipes for passenger, apache, and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
@@ -47,11 +47,10 @@ Gem::Specification.new do |s|
     "spec/cap_recipes_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.has_rdoc = true
   s.homepage = %q{http://github.com/nesquena/cap-recipes}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.2}
+  s.rubygems_version = %q{1.3.3}
   s.summary = %q{Battle-tested capistrano recipes for passenger, apache, and more}
   s.test_files = [
     "spec/cap/helper.rb",
