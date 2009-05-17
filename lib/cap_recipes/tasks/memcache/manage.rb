@@ -11,7 +11,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Stops the memcache server"
     task :stop, :roles => :app do
       puts "Stopping the memcache server"
-      try_sudo "killall -s TERM memcached" 
+      try_sudo "killall -s TERM memcached; true" 
     end
 
     desc "Starts the memcache server"

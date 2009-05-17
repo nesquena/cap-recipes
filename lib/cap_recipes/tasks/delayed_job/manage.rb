@@ -19,7 +19,7 @@ Capistrano::Configuration.instance(true).load do
       # run "cd #{current_path} && #{sudo} #{base_ruby_path}/bin/ruby #{delayed_script_path} restart #{delayed_job_env}"
       delayed_job.stop
       sleep(4)
-      try_sudo "killall -s TERM delayed_job"
+      try_sudo "killall -s TERM delayed_job; true"
       delayed_job.start
     end
   end
