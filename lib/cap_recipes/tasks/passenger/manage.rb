@@ -3,14 +3,6 @@ require 'cap_recipes/tasks/with_scope.rb'
 Capistrano::Configuration.instance(true).load do
   namespace :deploy do
     
-    desc "Default deploy action" 
-    task :default, :roles => :web do
-      with_role(:web) do
-        update
-        restart
-      end
-    end
-    
     desc "Stops the phusion passenger server"
     task :stop, :roles => :web do
       puts "Stopping rails web server"
