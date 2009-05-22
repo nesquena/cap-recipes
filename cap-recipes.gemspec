@@ -2,12 +2,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.11"
+  s.version = "0.3.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2009-05-19}
-  s.description = %q{Battle-tested capistrano recipes for passenger, apache, and more}
+  s.date = %q{2009-05-21}
+  s.description = %q{Battle-tested capistrano recipes for passenger, apache, delayed_job, juggernaut, backgroundrb, rails and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -53,7 +53,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.3}
-  s.summary = %q{Battle-tested capistrano recipes for passenger, apache, and more}
+  s.summary = %q{Battle-tested capistrano recipes for passenger, delayed_job, and more}
   s.test_files = [
     "spec/cap/helper.rb",
      "spec/cap_recipes_spec.rb",
