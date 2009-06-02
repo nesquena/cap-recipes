@@ -1,9 +1,4 @@
 Capistrano::Configuration.instance(true).load do
-
-  # ===============================================================
-  # SERVER MANAGEMENT
-  # ===============================================================
-
   namespace :memcache do
     
     desc 'Installs memcache and the ruby gem'

@@ -13,6 +13,7 @@ Currently included:
  * Juggernaut Daemon
  * Backgroundrb Server
  * DelayedJob Worker
+ * Whenever Cron Scheduling
 
 h2. INSTALLATION
 
@@ -29,7 +30,7 @@ Include into your deploy.rb configuration file for Capistrano:
   # use a single slice of the deployment process
   # (use hooks which tie all the recipes into the deployment process,
   # tasks for managing and tasks for installing):
-  # substitute memcache with: passenger, rails, apache, backgroundrb, delayed_job, juggernaut
+  # substitute memcache with: passenger, rails, apache, backgroundrb, delayed_job, juggernaut, whenever
   require 'cap_recipes/tasks/memcache'
 
   # OR
@@ -225,7 +226,26 @@ h5. install.rb
 h5. hooks
 
   after "deploy:restart", "memcache:restart" # clear cache after updating code
-    
+
+h3. Whenever
+
+These recipes are for managing whenever cron job scheduling
+
+h4. Configuration
+
+  * None necessary yet
+  
+h4. Tasks
+
+h5. manage.rb
+
+  whenever
+    :update_crontab
+
+h5. hooks
+
+  after "deploy:symlink", "whenever:update_crontab"
+  
 h2. EXAMPLE
 
 Here is a sample deploy.rb file using cap_recipes:
