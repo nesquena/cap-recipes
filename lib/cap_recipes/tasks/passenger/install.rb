@@ -1,4 +1,4 @@
-require 'cap_recipes/tasks/with_scope.rb'
+require 'cap_recipes/tasks/utilities.rb'
 
 #TODO add something like require that a task named apache:restart exists
 Capistrano::Configuration.instance(true).load do

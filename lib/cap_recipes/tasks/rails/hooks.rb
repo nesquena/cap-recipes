@@ -1,4 +1,4 @@
-require 'cap_recipes/tasks/with_scope.rb'
+require 'cap_recipes/tasks/utilities.rb'
 
 Capistrano::Configuration.instance(true).load do
   after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path

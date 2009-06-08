@@ -1,9 +1,12 @@
 h1. cap-recipes
 
-A collection of useful capistrano recipes.
-Best suited for ruby projects which deploy using Phusion Passenger.
+A collection of useful capistrano recipes I have been using in production on a number of sites.
 
-Feel free to contribute to this and make it better!
+This gem is best suited for ruby (and rails) projects which deploy using Apache and Phusion Passenger.
+Feel free to contribute to this collection and make it even better! 
+
+The overall vision for this project being to collect a number of classic, generic recipes which can
+be used by the community.
 
 Currently included:
 
@@ -15,6 +18,7 @@ Currently included:
  * Backgroundrb Server
  * DelayedJob Worker
  * Whenever Cron Scheduling
+ * Aptitude Package Management 
 
 h2. INSTALLATION
 
@@ -33,7 +37,7 @@ Include into your deploy.rb configuration file for Capistrano:
   # tasks for managing and tasks for installing):
   require 'cap_recipes/tasks/memcache'
   require 'cap_recipes/tasks/passenger'
-  # or rails, apache, rubygems, delayed_job, juggernaut, backgroundrb, whenever
+  # or rails, apache, rubygems, delayed_job, juggernaut, backgroundrb, aptitude, whenever
 
   # OR
   # only use managing tasks:
@@ -115,6 +119,17 @@ h5. install.rb
 
  passenger
    :install
+
+h3. Aptitude
+
+h4. Tasks
+
+h5. manage.rb
+
+  aptitude
+    :install
+    :remove
+    :updates
 
 h3. Rails
 

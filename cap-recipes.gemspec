@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
   s.date = %q{2009-06-07}
-  s.description = %q{Battle-tested capistrano recipes for passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more}
+  s.description = %q{Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
      "lib/cap_recipes/tasks/apache.rb",
      "lib/cap_recipes/tasks/apache/install.rb",
      "lib/cap_recipes/tasks/apache/manage.rb",
+     "lib/cap_recipes/tasks/aptitude.rb",
+     "lib/cap_recipes/tasks/aptitude/manage.rb",
      "lib/cap_recipes/tasks/backgroundrb.rb",
      "lib/cap_recipes/tasks/backgroundrb/hooks.rb",
      "lib/cap_recipes/tasks/backgroundrb/manage.rb",
@@ -45,10 +47,10 @@ Gem::Specification.new do |s|
      "lib/cap_recipes/tasks/rails/manage.rb",
      "lib/cap_recipes/tasks/rubygems.rb",
      "lib/cap_recipes/tasks/rubygems/manage.rb",
+     "lib/cap_recipes/tasks/utilities.rb",
      "lib/cap_recipes/tasks/whenever.rb",
      "lib/cap_recipes/tasks/whenever/hooks.rb",
      "lib/cap_recipes/tasks/whenever/manage.rb",
-     "lib/cap_recipes/tasks/with_scope.rb",
      "spec/cap/all/Capfile",
      "spec/cap/helper.rb",
      "spec/cap_recipes_spec.rb",

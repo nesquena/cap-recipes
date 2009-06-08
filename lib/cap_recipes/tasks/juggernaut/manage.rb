@@ -13,7 +13,7 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Starts the juggernaut push server"
     task :start, :roles => juggernaut_role do
-      with_role(juggernaut_role) do
+      utilities.with_role(juggernaut_role) do
         puts "Starting juggernaut push server"
         try_sudo "#{base_ruby_path}/bin/juggernaut -c #{juggernaut_config} -d --pid #{juggernaut_pid} --log #{juggernaut_log}"
       end
@@ -21,7 +21,7 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Stops the juggernaut push server"
     task :stop, :roles => juggernaut_role do
-      with_role(juggernaut_role) do
+      utilities.with_role(juggernaut_role) do
         puts "Stopping juggernaut push server"
         try_sudo "#{base_ruby_path}/bin/juggernaut -c #{juggernaut_config} -k * --pid #{juggernaut_pid} --log #{juggernaut_log}"
       end
@@ -29,7 +29,7 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Restarts the juggernaut push server"
     task :restart, :roles => juggernaut_role do
-      with_role(juggernaut_role) do
+      utilities.with_role(juggernaut_role) do
         juggernaut.stop
         juggernaut.start
       end

@@ -1,4 +1,4 @@
-require 'cap_recipes/tasks/with_scope.rb'
+require 'cap_recipes/tasks/utilities.rb'
 
 Capistrano::Configuration.instance(true).load do
   namespace :deploy do
