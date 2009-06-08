@@ -41,22 +41,22 @@ Capistrano::Configuration.instance(true).load do
       apache.restart
     end
 
-# if you want to add more options, try this, in your own conifg
-# read this first... http://www.modrails.com/documentation/Users%20guide.html
-#    namespace :passenger do
-#      task :add_custom_configuration, :roles=>:web do
-#        #512 - 100(stack) - 4*100(instance)
-#        passenger_config = <<EOF
-#    PassengerMaxPoolSize 4
-#    PassengerPoolIdleTime 3000
-#    EOF
-#        put passenger_config, "/tmp/passenger"
-#        sudo "cat /tmp/passenger >> /etc/apache2/conf.d/passenger"
-#        apache.restart
-#      end
-#    end
-#    after "passenger:update_config", *%w(
-#      passenger:add_custom_configuration
-#    )
+    # if you want to add more options, try this, in your own conifg
+    # read this first... http://www.modrails.com/documentation/Users%20guide.html
+    #    namespace :passenger do
+    #      task :add_custom_configuration, :roles=>:web do
+    #        #512 - 100(stack) - 4*100(instance)
+    #        passenger_config = <<EOF
+    #    PassengerMaxPoolSize 4
+    #    PassengerPoolIdleTime 3000
+    #    EOF
+    #        put passenger_config, "/tmp/passenger"
+    #        sudo "cat /tmp/passenger >> /etc/apache2/conf.d/passenger"
+    #        apache.restart
+    #      end
+    #    end
+    #    after "passenger:update_config", *%w(
+    #      passenger:add_custom_configuration
+    #    )
   end
 end

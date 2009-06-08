@@ -8,6 +8,7 @@ Feel free to contribute to this and make it better!
 Currently included:
 
  * Apache Server
+ * Rubygems Package Management
  * Phusion Passenger (Setup and Deployment)
  * Memcache Process (Setup and Deployment)
  * Juggernaut Daemon
@@ -23,15 +24,16 @@ Include into your deploy.rb configuration file for Capistrano:
 
 <pre>
 <code>
-  # use the complete deployment process
+  # use the complete deployment process (NOT RECOMMENDED)
   require 'cap_recipes'
 
-  # OR
-  # use a single slice of the deployment process
+  # RECOMMENDED
+  # require necessary recipes according to your needs
   # (use hooks which tie all the recipes into the deployment process,
   # tasks for managing and tasks for installing):
-  # substitute memcache with: passenger, rails, apache, backgroundrb, delayed_job, juggernaut, whenever
   require 'cap_recipes/tasks/memcache'
+  require 'cap_recipes/tasks/passenger'
+  # or rails, apache, rubygems, delayed_job, juggernaut, backgroundrb, whenever
 
   # OR
   # only use managing tasks:
@@ -66,6 +68,24 @@ h5. install.rb
 
   apache
     :install
+  
+h3. Rubygems
+
+h4. Configuration
+
+  * rubygem_paths - a path or array of paths to your gem binaries [default '/usr/bin/gem' ]
+
+h4. Tasks
+
+h5. manage.rb
+
+  rubygems
+    :full_update
+    :upgrade
+    :update
+    :cleanup
+    :install
+    :uninstall
 
 h3. Passenger
 
@@ -73,7 +93,7 @@ These recipes manage the passenger module for apache
 
 h4. Configuration
 
- * base_ruby_path - the base path to the ruby installation [default: "/usr"]
+ * base_ruby_path - the base path to the ruby installation [default: '/usr']
  * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
 The following files and folders are expected to exist:

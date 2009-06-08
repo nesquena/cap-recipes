@@ -10,7 +10,7 @@ begin
     s.summary = %Q{Battle-tested capistrano recipes for passenger, delayed_job, and more}
     s.email = "nesquena@gmail.com"
     s.homepage = "http://github.com/nesquena/cap-recipes"
-    s.description = "Battle-tested capistrano recipes for passenger, apache, delayed_job, juggernaut, backgroundrb, rails and more"
+    s.description = "Battle-tested capistrano recipes for passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more"
     s.authors = ["Nathan Esquenazi"]
   end
 rescue LoadError
