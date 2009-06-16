@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.17"
+  s.version = "0.3.18"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2009-06-07}
+  s.date = %q{2009-06-15}
   s.description = %q{Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
@@ -20,6 +20,10 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION.yml",
      "cap-recipes.gemspec",
+     "examples/advanced/deploy.rb",
+     "examples/advanced/deploy/experimental.rb",
+     "examples/advanced/deploy/production.rb",
+     "examples/simple/deploy.rb",
      "lib/cap_recipes.rb",
      "lib/cap_recipes/tasks/apache.rb",
      "lib/cap_recipes/tasks/apache/install.rb",
@@ -64,7 +68,11 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/cap/helper.rb",
      "spec/cap_recipes_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "examples/advanced/deploy/experimental.rb",
+     "examples/advanced/deploy/production.rb",
+     "examples/advanced/deploy.rb",
+     "examples/simple/deploy.rb"
   ]
 
   if s.respond_to? :specification_version then
