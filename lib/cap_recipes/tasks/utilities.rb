@@ -1,6 +1,7 @@
 require 'fileutils'
  
 module Utilities 
+  # utilities.config_gsub('/etc/example', /(.*)/im, "\\1")
   def config_gsub(file, find, replace)
     tmp="/tmp/#{File.basename(file)}"
     get file, tmp
@@ -9,7 +10,7 @@ module Utilities
     put content, tmp
     sudo "mv #{tmp} #{file}"
   end
-  
+    
   def sudo_upload(from, to, options={}, &block)
     top.upload from, "/tmp/#{File.basename(to)}", options, &block
     sudo "mv /tmp/#{File.basename(to)} #{to}"
