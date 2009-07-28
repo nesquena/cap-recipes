@@ -26,16 +26,14 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Install a gem on the app servers"
     task :install, :roles => :app do
-      puts "Enter the name of the gem you'd like to install:"
-      gem_name = $stdin.gets.chomp
+      gem_name = utilities.ask "Enter the name of the gem you'd like to install:"
       logger.info "trying to install '#{gem_name}'"
       Array(rubygem_paths).each {|path| sudo "#{path} install #{gem_name} --no-ri --no-rdoc" }
     end
 
     desc "Uninstall a gem from app servers"
     task :uninstall, :roles => :app do
-      puts "Enter the name of the gem you'd like to remove:"
-      gem_name = $stdin.gets.chomp
+      gem_name = utilities.ask "Enter the name of the gem you'd like to remove:"
       logger.info "trying to remove '#{gem_name}'"
       Array(rubygem_paths).each { |path| sudo "#{path} uninstall #{gem_name} -x" }
     end

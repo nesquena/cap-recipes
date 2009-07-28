@@ -10,7 +10,24 @@ module Utilities
     put content, tmp
     sudo "mv #{tmp} #{file}"
   end
-    
+  
+  def ask(question, default='')
+    question = "\n" + question.join("\n") if question.respond_to?(:uniq)
+    answer = Capistrano::CLI.ui.ask(space(question)).strip
+    answer.empty? ? default : answer
+  end
+
+  def yes?(question)
+    question = "\n" + question.join("\n") if question.respond_to?(:uniq)
+    question += ' (y/n)'
+    ask(question).downcase.include? 'y'
+  end
+  
+  def space(str)
+    "\n#{'=' * 80}\n#{str}"
+  end
+  
+  
   def sudo_upload(from, to, options={}, &block)
     top.upload from, "/tmp/#{File.basename(to)}", options, &block
     sudo "mv /tmp/#{File.basename(to)} #{to}"
