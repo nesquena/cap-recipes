@@ -14,17 +14,17 @@ Capistrano::Configuration.instance(true).load do
       Array(rubygem_paths).each { |path| sudo "#{path} update --system" }
     end
 
-    desc "Updates all installed gems"
+    desc "Updates all installed gems on app servers"
     task :update, :roles => :app do
       Array(rubygem_paths).each { |path| sudo "#{path} update" }
     end
 
-    desc "Removes old gems which are now outdated"
+    desc "Removes old gems which have been outdated"
     task :cleanup, :roles => :app do
       Array(rubygem_paths).each { |path| sudo "#{path} cleanup" }
     end
 
-    desc "Install a gem on your servers servers"
+    desc "Install a gem on the app servers"
     task :install, :roles => :app do
       puts "Enter the name of the gem you'd like to install:"
       gem_name = $stdin.gets.chomp
@@ -32,7 +32,7 @@ Capistrano::Configuration.instance(true).load do
       Array(rubygem_paths).each {|path| sudo "#{path} install #{gem_name} --no-ri --no-rdoc" }
     end
 
-    desc "Uninstall a gem from the release servers"
+    desc "Uninstall a gem from app servers"
     task :uninstall, :roles => :app do
       puts "Enter the name of the gem you'd like to remove:"
       gem_name = $stdin.gets.chomp
