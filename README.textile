@@ -65,15 +65,13 @@ h4. Tasks
 
 h5. manage.rb
 
-  apache
-    :stop
-    :start
-    :restart
+  * apache:stop
+  * apache:start
+  * apache:restart
     
 h5. install.rb
 
-  apache
-    :install
+  * apache:install
   
 h3. Rubygems
 
@@ -85,13 +83,12 @@ h4. Tasks
 
 h5. manage.rb
 
-  rubygems
-    :full_update
-    :upgrade
-    :update
-    :cleanup
-    :install
-    :uninstall
+  * rubygems:full_update
+  * rubygems:upgrade
+  * rubygems:update
+  * rubygems:cleanup
+  * rubygems:install
+  * rubygems:uninstall
 
 h3. Passenger
 
@@ -111,16 +108,14 @@ h4. Tasks
 
 h5. manage.rb
 
-  deploy
-    :start
-    :stop
-    :restart
-    :with_migrations
+  * deploy:start
+  * deploy:stop
+  * deploy:restart
+  * deploy:with_migrations
       
 h5. install.rb
 
- passenger
-   :install
+ * passenger:install
 
 h3. Aptitude
 
@@ -128,10 +123,9 @@ h4. Tasks
 
 h5. manage.rb
 
-  aptitude
-    :install
-    :remove
-    :updates
+  * aptitude:install
+  * aptitude:remove
+  * aptitude:updates
 
 h3. Rails
 
@@ -141,14 +135,12 @@ h4. Tasks
 
 h5. manage.rb
 
-  rails
-    :symlink_db_config
-    :repair_permissions
-    :tail - tail production log
-    :ping - ping the server to start it
-    sweep
-      :cache
-      :log
+  * rails:symlink_db_config
+  * rails:repair_permissions
+  * rails:tail - tail production log
+  * rails:ping - ping the server to start it
+  * rails:sweep:cache
+  * rails:sweep:log
       
 h5. hooks.rb
 
@@ -170,10 +162,9 @@ h4. Tasks
 
 h5. manage.rb
 
-  delayed_job
-    :stop
-    :start
-    :restart
+  * delayed_job:stop
+  * delayed_job:start
+  * delayed_job:restart
 
 h5. hooks.rb
 
@@ -195,12 +186,11 @@ h4. Tasks
 
 h5. manage.rb
 
-  backgroundrb
-    :stop
-    :start
-    :restart
-    :symlink_config
-    :tail
+  * backgroundrb:stop
+  * backgroundrb:start
+  * backgroundrb:restart
+  * backgroundrb:symlink_config
+  * backgroundrb:tail
       
 h5. hooks.rb
 
@@ -222,12 +212,11 @@ h4. Tasks
 
 h5. manage.rb
 
-  juggernaut
-    :start
-    :stop
-    :restart
-    :symlink_config
-    :tail
+  * juggernaut:start
+  * juggernaut:stop
+  * juggernaut:restart
+  * juggernaut:symlink_config
+  * juggernaut:tail
 
 h5. hooks.rb
 
@@ -250,15 +239,13 @@ h4. Tasks
 
 h5. manage.rb
 
-  memcache
-    :start
-    :stop
-    :restart
+  * memcache:start
+  * memcache:stop
+  * memcache:restart
     
 h5. install.rb
 
-  memcache
-    :install
+  * memcache:install
     
 h5. hooks
 
@@ -270,14 +257,13 @@ These recipes are for managing whenever cron job scheduling
 
 h4. Configuration
 
-  * None necessary yet
+  * None required
   
 h4. Tasks
 
 h5. manage.rb
 
-  whenever
-    :update_crontab
+  * whenever:update_crontab
 
 h5. hooks
 
