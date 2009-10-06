@@ -100,6 +100,7 @@ h4. Configuration
  * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
 The following files and folders are expected to exist:
+
  * "#{base_ruby_path}/lib/ruby"
  * "#{base_ruby_path}/bin/ruby"
  * "#{base_ruby_path}/bin/gem"
@@ -144,10 +145,14 @@ h5. manage.rb
       
 h5. hooks.rb
 
-  after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
-  after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
-  after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
-  after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
+<pre>
+<code>
+after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
+after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
+after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
+after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
+</code>
+</pre>
 
 h3. DelayedJob
 
@@ -168,9 +173,13 @@ h5. manage.rb
 
 h5. hooks.rb
 
-  after "deploy:start",   "delayed_job:start"
-  after "deploy:stop",    "delayed_job:stop"
-  after "deploy:restart", "delayed_job:restart"
+<pre>
+<code>
+after "deploy:start",   "delayed_job:start"
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:restart", "delayed_job:restart"
+</code>
+</pre>
 
 h3. Backgroundrb
 
@@ -194,9 +203,13 @@ h5. manage.rb
       
 h5. hooks.rb
 
-  after "deploy:update_code"   , "backgroundrb:symlink_config" # copy backgroundrb config to release
-  after "deploy:restart"       , "backgroundrb:restart"     # restart backgroundrb daemon
-  after "backgroundrb:restart" , "backgroundrb:repair_permissions" # restart backgroundrb damon
+<pre>
+<code>
+after "deploy:update_code"   , "backgroundrb:symlink_config" # copy backgroundrb config to release
+after "deploy:restart"       , "backgroundrb:restart"     # restart backgroundrb daemon
+after "backgroundrb:restart" , "backgroundrb:repair_permissions" # restart backgroundrb damon
+</code>
+</pre>
 
 h3. Juggernaut
 
@@ -220,8 +233,12 @@ h5. manage.rb
 
 h5. hooks.rb
 
-  after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
-  after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
+<pre>
+<code>
+after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
+after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
+</code>
+</pre>
 
 h3. Memcache
 
@@ -249,7 +266,11 @@ h5. install.rb
     
 h5. hooks
 
-  after "deploy:restart", "memcache:restart" # clear cache after updating code
+<pre>
+<code>
+after "deploy:restart", "memcache:restart" # clear cache after updating code
+</code>
+</pre>
 
 h3. Whenever
 
@@ -267,8 +288,12 @@ h5. manage.rb
 
 h5. hooks
 
-  after "deploy:symlink", "whenever:update_crontab"
-  
+<pre>
+<code>
+after "deploy:symlink", "whenever:update_crontab"
+</code>
+</pre>
+
 h2. EXAMPLE
 
 Here is a sample deploy.rb file using cap_recipes:
