@@ -1,4 +1,11 @@
-# rake version:bump:patch && rake release && rake build && rake install && sudo gem cleanup
+=begin
+Using Jeweler for Gem Packaging
+  Update the version and release version to github: 
+    rake version:bump:patch && rake release
+  Build and install the latest version locally:
+    rake build && rake install && sudo gem cleanup
+=end
+
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
@@ -13,8 +20,9 @@ begin
     s.description = "Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more"
     s.authors = ["Nathan Esquenazi"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
 Rake::RDocTask.new do |rdoc|
