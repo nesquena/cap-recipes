@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.20"
+  s.version = "0.3.21"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/nesquena/cap-recipes}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{cap-recipes}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Battle-tested capistrano recipes for passenger, delayed_job, and more}
   s.test_files = [
