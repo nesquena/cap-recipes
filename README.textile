@@ -22,9 +22,11 @@ Currently included:
 
 h2. INSTALLATION
 
-   sudo gem install nesquena-cap-recipes -s http://gems.github.com/
+To install the gem, execute:
 
-Include into your deploy.rb configuration file for Capistrano:
+@$ sudo gem install cap-recipes --source http://gemcutter.org@
+
+Then, include into your deploy.rb configuration file for Capistrano:
 
 <pre>
 <code>
