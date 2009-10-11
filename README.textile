@@ -3,22 +3,25 @@ h1. cap-recipes
 A collection of useful capistrano recipes I have been using in production on a number of sites.
 
 This gem is best suited for ruby (and rails) projects which deploy using Apache and Phusion Passenger.
+Worth noting is that the installation tasks are for linux distributions using apt-get packages.
 Feel free to contribute to this collection and make it even better! 
 
-The overall vision for this project being to collect a number of classic, generic recipes which can
-be used by the community.
+The overall vision for this project is simply to collect a number of classic, generic recipes 
+for common issues which can then be used by the community.
 
 Currently included:
 
- * Apache Server
- * Rubygems Package Management
- * Phusion Passenger (Setup and Deployment)
- * Memcache Process (Setup and Deployment)
+ * Rubygems Management
+ * Apache Server     
+ * Phusion Passenger
+ * Memcached Management
  * Juggernaut Daemon
  * Backgroundrb Server
  * DelayedJob Worker
  * Whenever Cron Scheduling
- * Aptitude Package Management 
+ * Aptitude Package Management
+ 
+Check out the USAGE section below for specific tasks included in the recipes. 
 
 h2. INSTALLATION
 
@@ -26,7 +29,7 @@ To install the gem, execute:
 
 @$ sudo gem install cap-recipes --source http://gemcutter.org@
 
-Then, include into your deploy.rb configuration file for Capistrano:
+Then, include into your @deploy.rb@ configuration file for Capistrano:
 
 <pre>
 <code>
@@ -51,6 +54,8 @@ Then, include into your deploy.rb configuration file for Capistrano:
 </code>
 </pre>
 
+You can find full examples of what your @deploy.rb@ file should look like in the @examples@ folder.
+
 h2. USAGE
 
 h3. Apache
@@ -65,13 +70,13 @@ h4. Tasks
 
 h5. manage.rb
 
-  * apache:stop
-  * apache:start
-  * apache:restart
+  * apache:stop - stops the apache server
+  * apache:start - starts the apache server
+  * apache:restart - restarts the apache server
     
 h5. install.rb
 
-  * apache:install
+  * apache:install - installs apache and dependencies onto a debian system
   
 h3. Rubygems
 
@@ -83,12 +88,12 @@ h4. Tasks
 
 h5. manage.rb
 
-  * rubygems:full_update
-  * rubygems:upgrade
-  * rubygems:update
-  * rubygems:cleanup
-  * rubygems:install
-  * rubygems:uninstall
+  * rubygems:full_update - Upgrades rubygems, updates all installed rubygems and performs a cleanup
+  * rubygems:upgrade - Upgrades rubygems version (if available)
+  * rubygems:update  - Updates all installed rubygems
+  * rubygems:cleanup - Performs a cleanup for all outdated rubygems
+  * rubygems:install - Installs a specifed gem from name inputted on console
+  * rubygems:uninstall - Removes a specified rubygem from name inputted on console
 
 h3. Passenger
 
@@ -109,14 +114,13 @@ h4. Tasks
 
 h5. manage.rb
 
-  * deploy:start
-  * deploy:stop
-  * deploy:restart
-  * deploy:with_migrations
+  * deploy:start - Starts the apache server (if needed)
+  * deploy:stop  - Stops the apache server (if needed)
+  * deploy:restart - Touches the restart.txt file 
       
 h5. install.rb
 
- * passenger:install
+ * passenger:install - Installs the passenger gem, compiles the module silently, and adds the necessary configuration
 
 h3. Aptitude
 
@@ -124,9 +128,9 @@ h4. Tasks
 
 h5. manage.rb
 
-  * aptitude:install
-  * aptitude:remove
-  * aptitude:updates
+  * aptitude:install - Installs a specified aptitude package from name inputted on console
+  * aptitude:remove  - Removes a specified aptitude package from name inputted on console
+  * aptitude:updates - Updates all installed aptitude packages
 
 h3. Rails
 
@@ -136,12 +140,12 @@ h4. Tasks
 
 h5. manage.rb
 
-  * rails:symlink_db_config
-  * rails:repair_permissions
-  * rails:tail - tail production log
-  * rails:ping - ping the server to start it
-  * rails:sweep:cache
-  * rails:sweep:log
+  * rails:symlink_db_config - Symlinks the database.yml file from shared/config to release path
+  * rails:repair_permissions - Forces the permissions on the rails app to make permission errors a thing of the past
+  * rails:tail - tail production log - Provides a stream tailing the production log
+  * rails:ping - pings the server to start a passenger instance (reduces downtime)
+  * rails:sweep:cache - performs a file cache sweep in production
+  * rails:sweep:log - performs a log sweep in production
       
 h5. hooks.rb
 
@@ -167,9 +171,9 @@ h4. Tasks
 
 h5. manage.rb
 
-  * delayed_job:stop
-  * delayed_job:start
-  * delayed_job:restart
+  * delayed_job:stop - stops the delayed_job workers
+  * delayed_job:start - starts the delayed_job workers
+  * delayed_job:restart - restarts the delayed_job workers
 
 h5. hooks.rb
 
@@ -195,11 +199,11 @@ h4. Tasks
 
 h5. manage.rb
 
-  * backgroundrb:stop
-  * backgroundrb:start
-  * backgroundrb:restart
-  * backgroundrb:symlink_config
-  * backgroundrb:tail
+  * backgroundrb:stop - stop backgroundrb workers
+  * backgroundrb:start - start backgroundrb workers
+  * backgroundrb:restart - restart backgroundrb workers
+  * backgroundrb:symlink_config - copy backgroundrb.yml from shared/config to release
+  * backgroundrb:tail - tails the backgroundrb log file in production
       
 h5. hooks.rb
 
@@ -225,11 +229,11 @@ h4. Tasks
 
 h5. manage.rb
 
-  * juggernaut:start
-  * juggernaut:stop
-  * juggernaut:restart
-  * juggernaut:symlink_config
-  * juggernaut:tail
+  * juggernaut:start - starts the juggernaut push server
+  * juggernaut:stop  - stop the juggernaut push server
+  * juggernaut:restart - restart the juggernaut push server
+  * juggernaut:symlink_config - copy juggernaut.yml from shared/config to release
+  * juggernaut:tail - tails the juggernaut log file in production
 
 h5. hooks.rb
 
@@ -256,13 +260,13 @@ h4. Tasks
 
 h5. manage.rb
 
-  * memcache:start
-  * memcache:stop
-  * memcache:restart
+  * memcache:start - starts the memcache daemon
+  * memcache:stop  - stops the memcache daemon
+  * memcache:restart - restarts the memcache daemon
     
 h5. install.rb
 
-  * memcache:install
+  * memcache:install - Installs memcache aptitude package and rubygem
     
 h5. hooks
 
@@ -284,7 +288,7 @@ h4. Tasks
 
 h5. manage.rb
 
-  * whenever:update_crontab
+  * whenever:update_crontab - Performs an update applying the schedule.rb file to your server's cron
 
 h5. hooks
 
