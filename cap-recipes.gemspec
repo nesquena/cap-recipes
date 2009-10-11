@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cap-recipes}
-  s.version = "0.3.25"
+  s.version = "0.3.26"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
@@ -52,7 +52,10 @@ Gem::Specification.new do |s|
      "lib/cap_recipes/tasks/rails.rb",
      "lib/cap_recipes/tasks/rails/hooks.rb",
      "lib/cap_recipes/tasks/rails/manage.rb",
+     "lib/cap_recipes/tasks/ruby.rb",
+     "lib/cap_recipes/tasks/ruby/install.rb",
      "lib/cap_recipes/tasks/rubygems.rb",
+     "lib/cap_recipes/tasks/rubygems/install.rb",
      "lib/cap_recipes/tasks/rubygems/manage.rb",
      "lib/cap_recipes/tasks/utilities.rb",
      "lib/cap_recipes/tasks/whenever.rb",
