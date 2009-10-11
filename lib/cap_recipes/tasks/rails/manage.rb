@@ -1,5 +1,3 @@
-require 'cap_recipes/tasks/utilities.rb'
-
 Capistrano::Configuration.instance(true).load do
   set :local_ping_path, 'http://localhost'
 

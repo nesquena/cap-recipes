@@ -1,6 +1,6 @@
-require 'cap_recipes/tasks/utilities.rb'
+require File.expand_path(File.dirname(__FILE__) + '/../utilities')
+require File.expand_path(File.dirname(__FILE__) + '/../apache/manage')
 
-#TODO add something like require that a task named apache:restart exists
 Capistrano::Configuration.instance(true).load do
   set :base_ruby_path, '/usr'
   set :confd_passenger_filename, 'passenger'

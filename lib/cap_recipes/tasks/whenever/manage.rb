@@ -1,5 +1,3 @@
-require 'cap_recipes/tasks/utilities.rb'
-
 Capistrano::Configuration.instance(true).load do
   namespace :whenever do
     desc "Update the crontab file"

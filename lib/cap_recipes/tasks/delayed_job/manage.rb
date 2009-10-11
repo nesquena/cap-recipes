@@ -1,3 +1,5 @@
+require File.expand_path(File.dirname(__FILE__) + '/../utilities')
+
 Capistrano::Configuration.instance(true).load do
   set :delayed_script_path, "#{current_path}/script/delayed_job"
   set :delayed_job_env, 'production'

@@ -1,5 +1,3 @@
-require 'cap_recipes/tasks/utilities.rb'
-
 Capistrano::Configuration.instance(true).load do
   namespace :deploy do
     
@@ -17,6 +15,7 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Restarts the phusion passenger server"
     task :restart, :roles => :web do
+      puts "Restarting passenger by touching restart.txt"
       run "touch #{current_path}/tmp/restart.txt"
     end
     
