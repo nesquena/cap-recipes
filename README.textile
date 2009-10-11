@@ -33,8 +33,7 @@ To install the gem, execute:
 
 Then, include into your @deploy.rb@ configuration file for Capistrano:
 
-<pre>
-<code>
+<pre><code>
   # use the complete deployment process (NOT RECOMMENDED)
   require 'cap_recipes'
 
@@ -53,8 +52,7 @@ Then, include into your @deploy.rb@ configuration file for Capistrano:
   # OR
   #only use install tasks:
   require 'cap_recipes/tasks/memcache/install'
-</code>
-</pre>
+</code></pre>
 
 You can find full examples of what your @deploy.rb@ file should look like in the @examples@ folder.
 
@@ -168,14 +166,12 @@ manage.rb
       
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:update_code", "rails:symlink_db_config" # copy database.yml file to release path
 after "deploy:update_code", "rails:sweep:cache" # clear cache after updating code
 after "deploy:restart"    , "rails:repair_permissions" # fix the permissions to work properly
 after "deploy:restart"    , "rails:ping" # ping passenger to start the rails instance
-</code>
-</pre>
+</code></pre>
 
 h3. DelayedJob
 
@@ -196,13 +192,11 @@ manage.rb
 
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:start",   "delayed_job:start"
 after "deploy:stop",    "delayed_job:stop"
 after "deploy:restart", "delayed_job:restart"
-</code>
-</pre>
+</code></pre>
 
 h3. Backgroundrb
 
@@ -226,13 +220,11 @@ manage.rb
       
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:update_code"   , "backgroundrb:symlink_config" # copy backgroundrb config to release
 after "deploy:restart"       , "backgroundrb:restart"     # restart backgroundrb daemon
 after "backgroundrb:restart" , "backgroundrb:repair_permissions" # restart backgroundrb damon
-</code>
-</pre>
+</code></pre>
 
 h3. Juggernaut
 
@@ -256,12 +248,10 @@ manage.rb
 
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
 after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
-</code>
-</pre>
+</code></pre>
 
 h3. Memcache
 
@@ -289,11 +279,9 @@ install.rb
     
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:restart", "memcache:restart" # clear cache after updating code
-</code>
-</pre>
+</code></pre>
 
 h3. Whenever
 
@@ -311,18 +299,15 @@ manage.rb
 
 hooks.rb
 
-<pre>
-<code>
+<pre><code>
 after "deploy:symlink", "whenever:update_crontab"
-</code>
-</pre>
+</code></pre>
 
 h2. EXAMPLE
 
 Here is a sample deploy.rb file using cap_recipes:
 
-<pre>
-<code>
+<pre><code>
 # =============================================================================
 # GENERAL SETTINGS
 # =============================================================================
@@ -364,8 +349,7 @@ set :juggernaut_log, "/var/log/juggernaut.log" # defaults to #{release_path}/log
 # MEMCACHE
 require 'cap_recipes/tasks/memcache'
 set :memcache_init_path, "/etc/init.d/memcache" # defaults to "/etc/init.d/memcache"
-</code>
-</pre>
+</code></pre>
 
 You can find more examples of what your @deploy.rb@ file should look like in the @examples@ folder.
 
