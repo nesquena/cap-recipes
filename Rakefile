@@ -1,9 +1,12 @@
 =begin
-Using Jeweler for Gem Packaging
-  Update the version and release version to github: 
+Using Jeweler for Gem Packaging...
+
+  * Update the version and release version to github: 
     $ rake version:bump:patch && rake release && rake gemcutter:release
-  Build and install the latest version locally:
-    $ rake build && rake install && sudo gem cleanup
+    
+  * Build and install the latest version locally:
+    $ rake install
+    
 =end
 
 require 'rake'

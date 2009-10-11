@@ -3,13 +3,14 @@ h1. cap-recipes
 A collection of useful capistrano recipes I have been using in production on a number of sites.
 
 This gem is best suited for ruby (and rails) projects which deploy using Apache and Phusion Passenger.
-Worth noting is that the installation tasks are for linux distributions using apt-get packages.
-Feel free to contribute to this collection and make it even better! 
+Worth noting is that the installation tasks are for systems using aptitude package management.
 
 The overall vision for this project is simply to collect a number of classic, generic recipes 
-for common issues which can then be used by the community.
+for common issues which can then be used by the community. 
 
-Currently included:
+Feel free to improve upon this recipe collection by adding your own! 
+
+Currently included recipes in this gem:
 
  * Ruby Setup  
  * Rubygems Management
@@ -401,7 +402,7 @@ to browse all available utility methods. A few are listed below:
  ** Forces tasks in block to execute only within specific role(s)
  ** This is useful because of certain limitations in the role declaration in capistrano
  
- * utilities.with_credentials { ... }
+ * utilities.with_credentials(:user => 'jsmith', :password => 'secret') { ... }
  ** Forces tasks in block to execute using the given user/password credentials
  ** This is useful because of certain limitations in capistrano
 
