@@ -44,7 +44,7 @@ Then, include into your @deploy.rb@ configuration file for Capistrano:
   # tasks for managing and tasks for installing):
   require 'cap_recipes/tasks/memcache'
   require 'cap_recipes/tasks/passenger'
-  # or rails, apache, rubygems, delayed_job, juggernaut, backgroundrb, aptitude, whenever
+  # or ruby, rubygems, rails, apache, delayed_job, juggernaut, backgroundrb, aptitude, whenever
 
   # OR
   # only use managing tasks:
@@ -70,13 +70,13 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * apache:stop - stops the apache server
   * apache:start - starts the apache server
   * apache:restart - restarts the apache server
     
-h5. install.rb
+install.rb
 
   * apache:install - installs apache and dependencies onto a debian system
 
@@ -88,7 +88,7 @@ h4. Configuration
   
 h4. Tasks
 
-h5. install.rb
+install.rb
 
   * ruby:setup - Installs ruby 1.8 using standard aptitude packages
 
@@ -101,7 +101,7 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * rubygems:full_update - Upgrades rubygems, updates all installed rubygems and performs a cleanup
   * rubygems:upgrade - Upgrades rubygems version (if available)
@@ -110,7 +110,7 @@ h5. manage.rb
   * rubygems:install - Installs a specifed gem from name inputted on console
   * rubygems:uninstall - Removes a specified rubygem from name inputted on console
   
-h5. install.rb
+install.rb
 
  * rubygems:install - Installs rubygems by downloading package and running setup.rb
 
@@ -131,13 +131,13 @@ The following files and folders are expected to exist:
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * deploy:start - Starts the apache server (if needed)
   * deploy:stop  - Stops the apache server (if needed)
   * deploy:restart - Touches the restart.txt file 
       
-h5. install.rb
+install.rb
 
  * passenger:install - Installs the passenger gem, compiles the module silently, and adds the necessary configuration
 
@@ -145,7 +145,7 @@ h3. Aptitude
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * aptitude:install - Installs a specified aptitude package from name inputted on console
   * aptitude:remove  - Removes a specified aptitude package from name inputted on console
@@ -157,7 +157,7 @@ These recipes support rails-specific functionality
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * rails:symlink_db_config - Symlinks the database.yml file from shared/config to release path
   * rails:repair_permissions - Forces the permissions on the rails app to make permission errors a thing of the past
@@ -166,7 +166,7 @@ h5. manage.rb
   * rails:sweep:cache - performs a file cache sweep in production
   * rails:sweep:log - performs a log sweep in production
       
-h5. hooks.rb
+hooks.rb
 
 <pre>
 <code>
@@ -188,13 +188,13 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * delayed_job:stop - stops the delayed_job workers
   * delayed_job:start - starts the delayed_job workers
   * delayed_job:restart - restarts the delayed_job workers
 
-h5. hooks.rb
+hooks.rb
 
 <pre>
 <code>
@@ -216,7 +216,7 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * backgroundrb:stop - stop backgroundrb workers
   * backgroundrb:start - start backgroundrb workers
@@ -224,7 +224,7 @@ h5. manage.rb
   * backgroundrb:symlink_config - copy backgroundrb.yml from shared/config to release
   * backgroundrb:tail - tails the backgroundrb log file in production
       
-h5. hooks.rb
+hooks.rb
 
 <pre>
 <code>
@@ -246,7 +246,7 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * juggernaut:start - starts the juggernaut push server
   * juggernaut:stop  - stop the juggernaut push server
@@ -254,7 +254,7 @@ h5. manage.rb
   * juggernaut:symlink_config - copy juggernaut.yml from shared/config to release
   * juggernaut:tail - tails the juggernaut log file in production
 
-h5. hooks.rb
+hooks.rb
 
 <pre>
 <code>
@@ -277,17 +277,17 @@ h4. Configuration
 
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * memcache:start - starts the memcache daemon
   * memcache:stop  - stops the memcache daemon
   * memcache:restart - restarts the memcache daemon
     
-h5. install.rb
+install.rb
 
   * memcache:install - Installs memcache aptitude package and rubygem
     
-h5. hooks
+hooks.rb
 
 <pre>
 <code>
@@ -305,11 +305,11 @@ h4. Configuration
   
 h4. Tasks
 
-h5. manage.rb
+manage.rb
 
   * whenever:update_crontab - Performs an update applying the schedule.rb file to your server's cron
 
-h5. hooks
+hooks.rb
 
 <pre>
 <code>
