@@ -11,12 +11,14 @@ module Utilities
     sudo "mv #{tmp} #{file}"
   end
   
+  # utilities.ask('What is your name?', 'John')
   def ask(question, default='')
     question = "\n" + question.join("\n") if question.respond_to?(:uniq)
     answer = Capistrano::CLI.ui.ask(space(question)).strip
     answer.empty? ? default : answer
   end
 
+  # utilities.yes?('Proceed with install?')
   def yes?(question)
     question = "\n" + question.join("\n") if question.respond_to?(:uniq)
     question += ' (y/n)'
@@ -27,6 +29,7 @@ module Utilities
     "\n#{'=' * 80}\n#{str}"
   end
   
+  # utilities.apt_install %w[package1 package2]
   def apt_install(packages)
     packages = Array(packages)
     apt_get="DEBCONF_TERSE='yes' DEBIAN_PRIORITY='critical' DEBIAN_FRONTEND=noninteractive apt-get"
@@ -38,6 +41,7 @@ module Utilities
     sudo "#{apt_get} -qyu --force-yes upgrade"
   end
   
+  # utilities.sudo_upload('/local/path/to/file', '/remote/path/to/destination', options)
   def sudo_upload(from, to, options={}, &block)
     top.upload from, "/tmp/#{File.basename(to)}", options, &block
     sudo "mv /tmp/#{File.basename(to)} #{to}"
@@ -45,6 +49,7 @@ module Utilities
     sudo "chown #{options[:owner]} #{to}" if options[:owner]
   end
   
+  # utilities.adduser('deploy')
   def adduser(user, options={})
     options[:shell] ||= '/bin/bash' # new accounts on ubuntu 6.06.1 have been getting /bin/sh
     switches = '--disabled-password --gecos ""'

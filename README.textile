@@ -11,6 +11,7 @@ for common issues which can then be used by the community.
 
 Currently included:
 
+ * Ruby Setup  
  * Rubygems Management
  * Apache Server     
  * Phusion Passenger
@@ -77,12 +78,25 @@ h5. manage.rb
 h5. install.rb
 
   * apache:install - installs apache and dependencies onto a debian system
+
+h3. Ruby
+
+h4. Configuration
+
+  * None required
   
+h4. Tasks
+
+h5. install.rb
+
+  * ruby:setup - Installs ruby 1.8 using standard aptitude packages
+
 h3. Rubygems
 
 h4. Configuration
 
   * rubygem_paths - a path or array of paths to your gem binaries [default '/usr/bin/gem' ]
+  * rubygems_version - which version of rubygems to install [default '1.3.5']
 
 h4. Tasks
 
@@ -94,6 +108,10 @@ h5. manage.rb
   * rubygems:cleanup - Performs a cleanup for all outdated rubygems
   * rubygems:install - Installs a specifed gem from name inputted on console
   * rubygems:uninstall - Removes a specified rubygem from name inputted on console
+  
+h5. install.rb
+
+ * rubygems:install - Installs rubygems by downloading package and running setup.rb
 
 h3. Passenger
 
@@ -347,6 +365,45 @@ require 'cap_recipes/tasks/memcache'
 set :memcache_init_path, "/etc/init.d/memcache" # defaults to "/etc/init.d/memcache"
 </code>
 </pre>
+
+You can find more examples of what your @deploy.rb@ file should look like in the @examples@ folder.
+
+h2. UTILITIES
+
+In addition to the recipes themselves, this gem provides a bunch of useful utility methods
+which make writing your own recipes or extending existing ones much easier by creating reusable
+commands for common subtasks in a recipe.
+
+There are too many to mention all of them directly, but check out @lib/cap_recipes/tasks/utilities.rb@
+to browse all available utility methods. A few are listed below:
+
+ * utilities.config_gsub(file, findPattern, replaceString)
+ ** Replaces the @findPattern@ with @replaceString@ within specified file on server
+ ** # utilities.config_gsub('/etc/example', /\#(option:.*?\n)/im, "\\1")
+ 
+ * utilities.ask(question, default) 
+ ** Asks the user a question on the command-line and returns the response
+ ** utilities.ask('What is your name?', 'John')
+ 
+ * utilities.yes?(question) 
+ ** Asks the user a yes or no question on the command-line and returns boolean result
+ ** utilities.yes?('Proceed with installation?')
+ 
+ * utilities.apt_install(packages)
+ ** Installs all specified aptitude packages silently without user intervention
+ ** utilities.apt_install %w[package1 package2]
+ 
+ * utilities.sudo_upload(local_path, remote_dest, options)
+ ** Uploads a file to a temporary location and then sudo moves it to specified remote destination
+ ** utilities.sudo_upload('/local/path/to/file', '/remote/path/to/destination', :mode => 'u+rwx')
+ 
+ * utilities.with_role(role) { ... }
+ ** Forces tasks in block to execute only within specific role(s)
+ ** This is useful because of certain limitations in the role declaration in capistrano
+ 
+ * utilities.with_credentials { ... }
+ ** Forces tasks in block to execute using the given user/password credentials
+ ** This is useful because of certain limitations in capistrano
 
 h2. LICENSE:
 
