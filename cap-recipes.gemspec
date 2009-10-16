@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2009-10-11}
+  s.date = %q{2009-10-16}
   s.description = %q{Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more}
   s.email = %q{nesquena@gmail.com}
   s.extra_rdoc_files = [
@@ -57,6 +57,10 @@ Gem::Specification.new do |s|
      "lib/cap_recipes/tasks/rubygems.rb",
      "lib/cap_recipes/tasks/rubygems/install.rb",
      "lib/cap_recipes/tasks/rubygems/manage.rb",
+     "lib/cap_recipes/tasks/thinking_sphinx.rb",
+     "lib/cap_recipes/tasks/thinking_sphinx/hooks.rb",
+     "lib/cap_recipes/tasks/thinking_sphinx/install.rb",
+     "lib/cap_recipes/tasks/thinking_sphinx/manage.rb",
      "lib/cap_recipes/tasks/utilities.rb",
      "lib/cap_recipes/tasks/whenever.rb",
      "lib/cap_recipes/tasks/whenever/hooks.rb",

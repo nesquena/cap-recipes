@@ -36,6 +36,7 @@ module Utilities
   
   def apt_upgrade
     apt_get="DEBCONF_TERSE='yes' DEBIAN_PRIORITY='critical' DEBIAN_FRONTEND=noninteractive apt-get"
+    sudo "#{apt_get} -qy update"
     sudo "#{apt_get} -qyu --force-yes upgrade"
   end
   

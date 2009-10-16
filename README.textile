@@ -17,6 +17,7 @@ Currently included recipes in this gem:
  * Apache Server     
  * Phusion Passenger
  * Memcached Management
+ * ThinkingSphinx Daemon
  * Juggernaut Daemon
  * Backgroundrb Server
  * DelayedJob Worker
@@ -43,6 +44,7 @@ Then, include into your @deploy.rb@ configuration file for Capistrano:
   # tasks for managing and tasks for installing):
   require 'cap_recipes/tasks/memcache'
   require 'cap_recipes/tasks/passenger'
+  require 'cap_recipes/tasks/thinking_sphinx'
   # or ruby, rubygems, rails, apache, delayed_job, juggernaut, backgroundrb, aptitude, whenever
 
   # OR
@@ -251,6 +253,36 @@ hooks.rb
 <pre><code>
 after "deploy:update_code", "juggernaut:symlink_config" # copy juggernaut.yml to release
 after "deploy:restart"    , "juggernaut:restart"     # restart juggernaut daemon
+</code></pre>
+
+h3. ThinkingSphinx
+
+These recipes are for managing the thinking_sphinx search index daemon
+
+h4. Configuration
+
+  * None required
+
+h4. Tasks
+
+manage.rb
+
+  * thinking_sphinx:start - starts the thinking_sphinx search daemon
+  * thinking_sphinx:index - executes the thinking_sphinx search indexer
+  * thinking_sphinx:stop  - stop the thinking_sphinx search daemon
+  * thinking_sphinx:restart - restart (and index) the thinking_sphinx search daemon
+  * thinking_sphinx:symlink_config - copy sphinx.yml from shared/config to release
+  * thinking_sphinx:tail - tails the juggernaut log file in production
+
+install.rb
+
+  * thinking_sphinx:install - installs sphinx, dependencies, and thinking_sphinx gem
+
+hooks.rb
+
+<pre><code>
+after "deploy:update_code", "thinking_sphinx:symlink_config" # sym thinking_sphinx.yml on update code
+after "deploy:restart"    , "thinking_sphinx:restart"     # restart thinking_sphinx on app restart
 </code></pre>
 
 h3. Memcache
