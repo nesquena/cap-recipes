@@ -181,7 +181,7 @@ These recipes are for tobi's delayed_job plugin for background job queue process
 
 h4. Configuration
 
-  * delayed_script_path - the path to the delayed job script [default: 'script/delayed_job']
+  * delayed_script_path - the path to the delayed job script [default: '#{current_path}/script/delayed_job']
   * delayed_job_env - the rails environment [default: 'production']
 
 h4. Tasks
