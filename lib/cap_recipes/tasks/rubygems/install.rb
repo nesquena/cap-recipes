@@ -16,7 +16,6 @@ Capistrano::Configuration.instance(true).load do
     task :cleanup do
       run "cd; rm -rf rubygems-#{rubygems_version}; rm -rf rubygems-#{rubygems_version}.*"
     end
-    before "rubygems:setup", "rubygems:cleanup"
     after "rubygems:setup", "rubygems:cleanup"
 
   end
