@@ -437,6 +437,12 @@ to browse all available utility methods. A few are listed below:
  * utilities.with_credentials(:user => 'jsmith', :password => 'secret') { ... }
  ** Forces tasks in block to execute using the given user/password credentials
  ** This is useful because of certain limitations in capistrano
+ 
+h2. CONTRIBUTERS
+
+  * nesquena [Nathan Esquenazi] - created and maintaining the library
+  * achiu    [Arthur Chiu]      - contributed gitosis, ruby and other recipes
+  * hubertlepicki               - contributed thinking_sphinx recipes
 
 h2. LICENSE:
 
