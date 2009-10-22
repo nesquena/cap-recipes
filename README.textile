@@ -68,7 +68,9 @@ These recipes manage the apache web server
 
 h4. Configuration
 
+
   * apache_init_path - the path to the init.d apache file [default: '/etc/init.d/apache2']
+
 
 h4. Tasks
 
@@ -86,8 +88,10 @@ h3. Ruby
 
 h4. Configuration
 
+
   * None required
   
+
 h4. Tasks
 
 install.rb
@@ -98,8 +102,10 @@ h3. Rubygems
 
 h4. Configuration
 
+
   * rubygem_paths - a path or array of paths to your gem binaries [default '/usr/bin/gem' ]
   * rubygems_version - which version of rubygems to install [default '1.3.5']
+
 
 h4. Tasks
 
@@ -122,6 +128,7 @@ These recipes manage the passenger module for apache
 
 h4. Configuration
 
+
  * base_ruby_path - the base path to the ruby installation [default: '/usr']
  * local_ping_path - the localhost path to ping to start passenger [default: "http://localhost"]
 
@@ -130,6 +137,7 @@ The following files and folders are expected to exist:
  * "#{base_ruby_path}/lib/ruby"
  * "#{base_ruby_path}/bin/ruby"
  * "#{base_ruby_path}/bin/gem"
+
 
 h4. Tasks
 
@@ -183,8 +191,10 @@ These recipes are for tobi's delayed_job plugin for background job queue process
 
 h4. Configuration
 
+
   * delayed_script_path - the path to the delayed job script [default: '#{current_path}/script/delayed_job']
   * delayed_job_env - the rails environment [default: 'production']
+
 
 h4. Tasks
 
@@ -208,9 +218,11 @@ These recipes are for backgroundrb job queue processing
 
 h4. Configuration
 
+
   * backgroundrb_log - the path to the backgroundrb log file
   * backgroundrb_host - the background host machine ip [default: 'localhost']
   * backgroundrb_env - the rails environment [default: 'production']
+
 
 h4. Tasks
 
@@ -236,9 +248,11 @@ These recipes are for managing the juggernaut push server
 
 h4. Configuration
 
+
   * juggernaut_config - path to juggernaut config file [default: "#{current_path}/config/juggernaut.yml"]
   * juggernaut_pid - path to juggernaut pid file [default: "#{current_path}/tmp/pids/juggernaut.pid"]
   * juggernaut_log - path to juggernaut log file [default: "#{current_path}/log/juggernaut.log"]
+
 
 h4. Tasks
 
@@ -263,7 +277,9 @@ These recipes are for managing the thinking_sphinx search index daemon
 
 h4. Configuration
 
+
   * None required
+
 
 h4. Tasks
 
@@ -293,11 +309,13 @@ These recipes are for managing the memcached caching mechanism
 
 h4. Configuration
 
+
   * memcache_init_path - path to memcache config file [default: "/etc/init.d/memcache"]
   * memcache_size - the total size of memory to use [default: 64]
   * memcache_port - the port to start memcache [default: '11211']
   * memcache_host - the host for memcache [default: '127.0.0.1']
   * memcache_user - the user to run memcache [default: 'nobody']
+
 
 h4. Tasks
 
@@ -323,8 +341,10 @@ These recipes are for installing Gitosis Git Repository Hosting
 
 h4. Configuration
 
+
   * None required
-  
+
+
 h4. Tasks
 
 install.rb
@@ -337,8 +357,10 @@ These recipes are for managing whenever cron job scheduling
 
 h4. Configuration
 
+
   * None required
-  
+
+
 h4. Tasks
 
 manage.rb
@@ -438,13 +460,15 @@ to browse all available utility methods. A few are listed below:
  ** Forces tasks in block to execute using the given user/password credentials
  ** This is useful because of certain limitations in capistrano
  
-h2. CONTRIBUTERS
+h2. CONTRIBUTORS
+
+The following people are the reason this library exists:
 
   * nesquena [Nathan Esquenazi] - created and maintaining the library
   * achiu    [Arthur Chiu]      - contributed gitosis, ruby and other recipes
   * hubertlepicki               - contributed thinking_sphinx recipes
 
-h2. LICENSE:
+h2. LICENSE
 
 (The MIT License)
 
