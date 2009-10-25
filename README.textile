@@ -22,6 +22,7 @@ Currently included recipes in this gem:
  * Backgroundrb Server
  * DelayedJob Worker
  * Whenever Cron Scheduling
+ * MongoDB Management
  * Aptitude Package Management
  * Gitosis Git Repository Hosting 
  
@@ -47,7 +48,8 @@ Then, include into your @deploy.rb@ configuration file for Capistrano:
   require 'cap_recipes/tasks/passenger'
   require 'cap_recipes/tasks/thinking_sphinx'
   require 'cap_recipes/tasks/rails'
-  # or ruby, rubygems, apache, delayed_job, juggernaut, backgroundrb, aptitude, gitosis, whenever
+  require 'cap_recipes/tasks/delayed_job'
+  # or ruby, rubygems, apache, mongodb, juggernaut, backgroundrb, aptitude, gitosis, whenever
 
   # OR
   # only use managing tasks:
@@ -335,6 +337,28 @@ hooks.rb
 after "deploy:restart", "memcache:restart" # clear cache after updating code
 </code></pre>
 
+h3. MongoDB
+
+These recipes are for installing and managing the mongodb document-oriented database
+
+h4. Configuration
+
+ * mongodb_data_path - the location to store the mongodb data [default: "/data/db"]
+ * mongodb_bin_path  - the location to install mongodb [default: "/opt/mongo"]
+ * mongodb_log - the path to the mongodb log file [default: "/var/log/mongodb.log"]
+
+h4. Tasks
+
+install.rb
+
+  * mongodb:install - Performs the full installation of mongodb and dependencies
+
+manage.rb
+
+  * mongodb:start   - Starts the mongodb process
+  * mongodb:stop    - Stops the mongodb process
+  * mongodb:restart - Restarts the mongodb process
+
 h3. Gitosis
 
 These recipes are for installing Gitosis Git Repository Hosting
@@ -465,7 +489,7 @@ h2. CONTRIBUTORS
 The following people are the reason this library exists:
 
   * nesquena [Nathan Esquenazi] - created and maintaining the library
-  * achiu    [Arthur Chiu]      - contributed gitosis, ruby and other recipes
+  * achiu    [Arthur Chiu]      - contributed gitosis, ruby, mongodb and other recipes
   * hubertlepicki               - contributed thinking_sphinx recipes
 
 h2. LICENSE
