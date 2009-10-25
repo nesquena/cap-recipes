@@ -32,7 +32,7 @@ Capistrano::Configuration.instance(true).load do
     end
 
     task :setup_db_path, :role => :app do
-      sudo "mkdir -p #{mongodb_path}"
+      sudo "mkdir -p #{mongodb_data_path}"
       mongodb.start
     end
   end

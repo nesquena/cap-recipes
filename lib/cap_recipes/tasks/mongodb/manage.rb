@@ -7,7 +7,7 @@ Capistrano::Configuration.instance(true).load do
   namespace :mongodb do
     desc "Starts the mongodb server"
     task :start, :role => :app do
-      sudo "#{mongodb_bin_path}/bin/mongod --fork --logpath #{mongodb_log} --logappend --dbpath #{mongodb_path}"
+      sudo "#{mongodb_bin_path}/bin/mongod --fork --logpath #{mongodb_log} --logappend --dbpath #{mongodb_data_path}"
     end
 
     desc "Stop the mongodb server"
