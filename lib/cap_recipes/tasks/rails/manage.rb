@@ -22,7 +22,7 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Displays the production log from the server locally"
     task :tail, :roles => :app do
-      stream "tail -f #{shared_path}/log/production.log"
+      stream "tail -f #{shared_path}/log/#{stage_or_production}.log"
     end
 
     desc "Pings localhost to startup server"
@@ -30,7 +30,7 @@ Capistrano::Configuration.instance(true).load do
       puts "Pinging the web server to start it"
       run "wget -O /dev/null #{local_ping_path} 2>/dev/null"
     end
-    
+
     # ===============================================================
     # MAINTENANCE TASKS
     # ===============================================================
@@ -38,14 +38,21 @@ Capistrano::Configuration.instance(true).load do
       desc "Clear file-based fragment and action caching"
       task :log, :roles => :app  do
         puts "Sweeping all the log files"
-        run "cd #{current_path} && #{try_sudo} bundle exec rake log:clear RAILS_ENV=production"
+        run "cd #{current_path} && #{try_sudo} bundle exec rake log:clear RAILS_ENV=#{stage_or_production}"
       end
 
       desc "Clear file-based fragment and action caching"
       task :cache, :roles => :app do
         puts "Sweeping the fragment and action cache stores"
-        run "cd #{release_path} && #{try_sudo} bundle exec rake tmp:cache:clear RAILS_ENV=production"
+        run "cd #{release_path} && #{try_sudo} bundle exec rake tmp:cache:clear RAILS_ENV=#{stage_or_production}"
       end
     end
+  end
+
+  # ===============================================================
+  # Support for capistrano-ext
+  # ===============================================================
+  def stage_or_production
+    exists?(:stage) ? stage : "production"
   end
 end
