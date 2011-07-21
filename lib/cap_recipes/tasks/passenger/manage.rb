@@ -20,4 +20,35 @@ Capistrano::Configuration.instance(true).load do
     end
     
   end
+
+  namespace :passenger do
+
+    desc "Standalone mode for passenger"
+    namespace :standalone do
+
+      desc "Starts the standalone passenger server"
+      task :start do
+        run "cd #{current_path} && passenger start -a 127.0.0.1 -p 3000 -d -e #{stage_or_production}"
+      end
+
+      desc "Stops the standalone passenger server"
+      task :stop do
+        run "cd #{current_path} && passenger stop"
+      end
+
+      desc "Restarts the standalone passenger server"
+      task :restart, :roles => :app, :except => { :no_release => true } do
+        run "cd #{current_path} && passenger stop"
+        run "cd #{current_path} && passenger start -a 127.0.0.1 -p 3000 -d -e #{stage_or_production}"
+      end
+
+    end
+
+  end
+  # ===============================================================
+  # Support for capistrano-ext
+  # ===============================================================
+  def stage_or_production
+    exists?(:stage) ? stage : "production"
+  end
 end
