@@ -13,7 +13,7 @@ Capistrano::Configuration.instance(true).load do
     desc "Stop the mongodb server"
     task :stop, :role => :app do
       pid = capture("ps -o pid,command ax | grep mongod | awk '!/awk/ && !/grep/ {print $1}'")
-      sudo "kill -2 #{pid}" unless pid.strip.empty?
+      sudo "kill -INT #{pid}" unless pid.strip.empty?
     end
 
     desc "Restart the mongodb server"
