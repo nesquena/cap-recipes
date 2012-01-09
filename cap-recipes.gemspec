@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{cap-recipes}
-  s.version = "0.3.37"
+  s.name = "cap-recipes"
+  s.version = "0.3.38"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Esquenazi"]
-  s.date = %q{2011-12-20}
-  s.description = %q{Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more}
-  s.email = %q{nesquena@gmail.com}
+  s.date = "2012-01-09"
+  s.description = "Battle-tested capistrano recipes for debian, passenger, apache, delayed_job, juggernaut, rubygems, backgroundrb, rails and more"
+  s.email = "nesquena@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.textile"
@@ -74,11 +74,11 @@ Gem::Specification.new do |s|
     "spec/cap_recipes_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/nesquena/cap-recipes}
+  s.homepage = "http://github.com/nesquena/cap-recipes"
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{cap-recipes}
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Battle-tested capistrano recipes for passenger, delayed_job, and more}
+  s.rubyforge_project = "cap-recipes"
+  s.rubygems_version = "1.8.12"
+  s.summary = "Battle-tested capistrano recipes for passenger, delayed_job, and more"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
