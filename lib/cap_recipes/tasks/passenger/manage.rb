@@ -1,6 +1,6 @@
 Capistrano::Configuration.instance(true).load do
   namespace :deploy do
-    
+
     desc "Stops the phusion passenger server"
     task :stop, :roles => :web do
       puts "Stopping rails web server"
@@ -18,7 +18,7 @@ Capistrano::Configuration.instance(true).load do
       puts "Restarting passenger by touching restart.txt"
       run "touch #{current_path}/tmp/restart.txt"
     end
-    
+
   end
 
   namespace :passenger do
@@ -45,6 +45,7 @@ Capistrano::Configuration.instance(true).load do
     end
 
   end
+
   # ===============================================================
   # Support for capistrano-ext
   # ===============================================================
