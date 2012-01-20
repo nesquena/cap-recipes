@@ -19,18 +19,22 @@ set :password, "demo567"
 set :use_sudo, true
 set :branch, 'production'
 
+ssh_options[:forward_agent] = true
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
+ssh_options[:paranoid] = false
+default_run_options[:pty] = true
+
 # =============================================================================
 # RECIPE INCLUDES
 # =============================================================================
 
 require 'rubygems'
-require 'cap_recipes/tasks/whenever'
-require 'cap_recipes/tasks/apache'
-require 'cap_recipes/tasks/passenger'
-require 'cap_recipes/tasks/memcache'
-require 'cap_recipes/tasks/juggernaut'
-require 'cap_recipes/tasks/delayed_job'
-require 'cap_recipes/tasks/rails'
+require "bundler/capistrano"
+# require 'cap_recipes/tasks/whenever'
+# require 'cap_recipes/tasks/passenger'
+# require 'cap_recipes/tasks/apache'
+# require 'cap_recipes/tasks/memcache'
+# require 'cap_recipes/tasks/juggernaut'
+# require 'cap_recipes/tasks/delayed_job'
+# require 'cap_recipes/tasks/rails'
 
-ssh_options[:paranoid] = false
-default_run_options[:pty] = true
